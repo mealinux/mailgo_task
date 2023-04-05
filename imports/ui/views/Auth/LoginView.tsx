@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  Box,
   Button,
   Card,
   CardBody,
@@ -12,15 +13,16 @@ import {
 import { Body } from "../../layouts/Body";
 import { ColorsEnum } from "../../constants/ColorsEnum";
 import { TextEnum } from "../../constants/TextEnum";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { RoutesEnum } from "../../constants/RoutesEnum";
 
 import { Link } from "react-router-dom";
 
+import { FaArrowCircleRight } from "react-icons/fa";
+
 const LoginView = () => {
   return (
     <Body>
-      <Container maxW={"container.md"}>
+      <Container maxW={"container.md"} mt={20}>
         <Card bg={ColorsEnum.DARK_PURPLE}>
           <CardBody minW={"container.md"}>
             <Flex
@@ -28,11 +30,11 @@ const LoginView = () => {
               alignItems={"center"}
               minH={400}
             >
-              <Flex justifyContent={"center"} width={"auto"}>
+              <Box justifyContent={"center"} width={"auto"}>
                 <Text fontSize={TextEnum.H1_SIZE} color={ColorsEnum.WHITE}>
                   mailGo
                 </Text>
-              </Flex>
+              </Box>
               <Flex
                 flexDirection={"column"}
                 justifyContent={"space-between"}
@@ -46,7 +48,7 @@ const LoginView = () => {
                     LOGIN
                   </Text>
                 </Flex>
-                <Flex>
+                <Box>
                   <Input
                     placeholder="E-mail"
                     size="md"
@@ -54,8 +56,8 @@ const LoginView = () => {
                     width={"auto"}
                     bg={ColorsEnum.WHITE}
                   />
-                </Flex>
-                <Flex>
+                </Box>
+                <Box>
                   <Input
                     placeholder="Password"
                     type="password"
@@ -64,13 +66,13 @@ const LoginView = () => {
                     width={"auto"}
                     bg={ColorsEnum.WHITE}
                   />
-                </Flex>
+                </Box>
                 <Flex justifyContent={"space-evenly"}>
                   <Link to={RoutesEnum.REGISTER}>
                     <Button
                       bg={ColorsEnum.MEDIUM_PURPLE}
                       size="md"
-                      leftIcon={<ArrowForwardIcon />}
+                      leftIcon={<FaArrowCircleRight />}
                     >
                       Sign up
                     </Button>
@@ -79,7 +81,7 @@ const LoginView = () => {
                     <Button
                       bg={ColorsEnum.MEDIUM_PURPLE}
                       size="md"
-                      rightIcon={<ArrowForwardIcon />}
+                      rightIcon={<FaArrowCircleRight />}
                     >
                       Log in
                     </Button>
