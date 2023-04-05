@@ -3,7 +3,7 @@ import Main from "../../Main";
 import { Flex, useDisclosure } from "@chakra-ui/react";
 import DataTableCom from "../../components/DataTableCom";
 
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaUndoAlt } from "react-icons/fa";
 import OutlineButtonCom from "../../components/OutlineButtonCom";
 import { ColorsEnum } from "../../constants/ColorsEnum";
 
@@ -28,12 +28,18 @@ const SubscribersView = () => {
               setDateRange(date);
             }}
           />
-          <Flex justifyContent={"end"}>
+          <Flex justifyContent={"end"} gap={4}>
+            <OutlineButtonCom
+              text={"Import"}
+              icon={<FaUndoAlt />}
+              customClickColor={ColorsEnum.LIGHTEST_PURPLE}
+              customContentColor={ColorsEnum.RED}
+            />
             <OutlineButtonCom
               onClickForOpen={onOpen}
               text={"New"}
               icon={<FaPlus />}
-              customClickColor={ColorsEnum.LIGHT_PURPLE}
+              customClickColor={ColorsEnum.LIGHTEST_PURPLE}
               customContentColor={ColorsEnum.DARKEST_PURPLE}
             />
           </Flex>

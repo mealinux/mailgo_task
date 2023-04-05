@@ -50,14 +50,14 @@ const AddCategoryView = (props: {
         <ModalFooter gap={4}>
           <OutlineButtonCom
             text={"Close"}
-            customClickColor={ColorsEnum.LIGHT_PURPLE}
+            customClickColor={ColorsEnum.LIGHTEST_PURPLE}
             customContentColor={ColorsEnum.GREY}
             onClickForOpen={props.onClose}
           />
           <OutlineButtonCom
             text={"Add"}
             icon={<FaPlus />}
-            customClickColor={ColorsEnum.LIGHT_PURPLE}
+            customClickColor={ColorsEnum.LIGHTEST_PURPLE}
             customContentColor={ColorsEnum.DARKEST_PURPLE}
           />
         </ModalFooter>

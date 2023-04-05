@@ -39,12 +39,12 @@ const data = [
         <OutlineButtonCom
           text={"Edit"}
           icon={<FaEdit />}
-          customClickColor={ColorsEnum.LIGHT_PURPLE}
+          customClickColor={ColorsEnum.LIGHTEST_PURPLE}
           customContentColor={ColorsEnum.BLUE}
         />
         <OutlineButtonCom
           icon={<FaTrashAlt />}
-          customClickColor={ColorsEnum.LIGHT_PURPLE}
+          customClickColor={ColorsEnum.LIGHTEST_PURPLE}
           customContentColor={ColorsEnum.RED}
         />
       </Flex>
@@ -59,12 +59,12 @@ const data = [
         <OutlineButtonCom
           text={"Edit"}
           icon={<FaEdit />}
-          customClickColor={ColorsEnum.LIGHT_PURPLE}
+          customClickColor={ColorsEnum.LIGHTEST_PURPLE}
           customContentColor={ColorsEnum.BLUE}
         />
         <OutlineButtonCom
           icon={<FaTrashAlt />}
-          customClickColor={ColorsEnum.LIGHT_PURPLE}
+          customClickColor={ColorsEnum.LIGHTEST_PURPLE}
           customContentColor={ColorsEnum.RED}
         />
       </Flex>
@@ -79,12 +79,12 @@ const data = [
         <OutlineButtonCom
           text={"Edit"}
           icon={<FaEdit />}
-          customClickColor={ColorsEnum.LIGHT_PURPLE}
+          customClickColor={ColorsEnum.LIGHTEST_PURPLE}
           customContentColor={ColorsEnum.BLUE}
         />
         <OutlineButtonCom
           icon={<FaTrashAlt />}
-          customClickColor={ColorsEnum.LIGHT_PURPLE}
+          customClickColor={ColorsEnum.LIGHTEST_PURPLE}
           customContentColor={ColorsEnum.RED}
         />
       </Flex>
