@@ -1,12 +1,76 @@
 import React from "react";
-import Main from "../../Main";
-import { Text } from "@chakra-ui/react";
+import {
+  Flex,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from "@chakra-ui/react";
+import OutlineButtonCom from "../../components/OutlineButtonCom";
+import { ColorsEnum } from "../../constants/ColorsEnum";
 
-const AddSubscriberView = () => {
+import { FaPlus } from "react-icons/fa";
+import { TextEnum } from "../../constants/TextEnum";
+
+const AddSubscriberView = (props: {
+  isOpen: boolean;
+  onOpen: any;
+  onClose: any;
+}) => {
   return (
-    <Main>
-      <Text>AddSubscriberView drgd</Text>
-    </Main>
+    <Modal isOpen={props.isOpen} onClose={props.onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader fontSize={TextEnum.H6_SIZE}>Add New Category</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Flex flexDirection={"column"}>
+            <Input
+              placeholder="First Name"
+              size="md"
+              htmlSize={30}
+              mb={4}
+              width={"auto"}
+              bg={ColorsEnum.WHITE}
+            />
+            <Input
+              placeholder="Last Name"
+              size="md"
+              htmlSize={30}
+              mb={4}
+              width={"auto"}
+              bg={ColorsEnum.WHITE}
+            />
+            <Input
+              placeholder="E-Mail"
+              size="md"
+              htmlSize={30}
+              width={"auto"}
+              bg={ColorsEnum.WHITE}
+            />
+          </Flex>
+        </ModalBody>
+
+        <ModalFooter gap={4}>
+          <OutlineButtonCom
+            text={"Close"}
+            customClickColor={ColorsEnum.LIGHT_PURPLE}
+            customContentColor={ColorsEnum.GREY}
+            onClickForOpen={props.onClose}
+          />
+          <OutlineButtonCom
+            text={"Add"}
+            icon={<FaPlus />}
+            customClickColor={ColorsEnum.LIGHT_PURPLE}
+            customContentColor={ColorsEnum.DARKEST_PURPLE}
+          />
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 };
 

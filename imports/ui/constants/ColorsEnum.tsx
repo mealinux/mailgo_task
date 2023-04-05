@@ -6,6 +6,7 @@ export enum ColorsEnum {
   GREY = "#92959E",
   LIGHT_GREY = "#D0D2DA",
   WHITE = "#F5F5F7",
+  LIGHTEST_PURPLE = "#E8E0FF",
   LIGHT_PURPLE = "#A7A4C5",
   MEDIUM_PURPLE = "#837FA3",
   PURPLE = "#3E3A66",
