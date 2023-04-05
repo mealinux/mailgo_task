@@ -32,7 +32,7 @@ const CampaignsView = () => {
               onClickForOpen={onOpen}
               text={"New"}
               icon={<FaPlus />}
-              customClickColor={ColorsEnum.LIGHT_PURPLE}
+              customClickColor={ColorsEnum.LIGHTEST_PURPLE}
               customContentColor={ColorsEnum.DARKEST_PURPLE}
             />
           </Flex>
