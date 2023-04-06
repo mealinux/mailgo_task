@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Main from "../../Main";
 import { Flex, useDisclosure } from "@chakra-ui/react";
 import DataTableCom from "../../components/DataTableCom";
@@ -9,11 +9,24 @@ import { ColorsEnum } from "../../constants/ColorsEnum";
 
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import AddCategoryView from "./AddCategoryView";
+import { Meteor } from "meteor/meteor";
 
 const CategoriesView = () => {
+  const [value, setValue] = useState("");
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [dateRange, setDateRange] = useState([new Date(), new Date()]);
+
+  useEffect(() => {
+    Meteor.call("category", {}, (err: any, res: any) => {
+      if (err) {
+        alert(err);
+      } else {
+        console.log(res);
+      }
+    });
+  }, []);
 
   return (
     <Main style={{ width: "80%" }}>
