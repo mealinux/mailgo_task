@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import {
   Box,
@@ -15,11 +15,49 @@ import { ColorsEnum } from "../../constants/ColorsEnum";
 import { TextEnum } from "../../constants/TextEnum";
 import { RoutesEnum } from "../../constants/RoutesEnum";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FaArrowCircleRight } from "react-icons/fa";
 
+import { Accounts } from "meteor/accounts-base";
+import UtilContext from "/imports/context/UtilContext";
+
 const RegisterView = () => {
+  const navigate = useNavigate();
+
+  const util = useContext(UtilContext);
+
+  const [name, setName] = useState("");
+  const [last_name, setLast_name] = useState("");
+  const [email, setEmail] = useState("");
+  const [company_name, setCompany_name] = useState("");
+  const [password, setPassword] = useState("");
+
+  const registerHandle = () => {
+    util?.setProgressBar(true);
+
+    setTimeout(() => {
+      const user = {
+        profile: { name, last_name },
+        email,
+        company_name,
+        password,
+      };
+
+      Accounts.createUser(user, (error) => {
+        if (error) {
+          util?.setProgressBar(false);
+        } else {
+          navigate(RoutesEnum.DASHBOARD);
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    util?.setProgressBar(false);
+  }, []);
+
   return (
     <Body>
       <Container maxW={"container.md"} mt={20}>
@@ -55,6 +93,7 @@ const RegisterView = () => {
                     htmlSize={30}
                     width={"auto"}
                     bg={ColorsEnum.WHITE}
+                    onChange={(event) => setName(event.target.value)}
                   />
                 </Box>
                 <Box>
@@ -64,6 +103,7 @@ const RegisterView = () => {
                     htmlSize={30}
                     width={"auto"}
                     bg={ColorsEnum.WHITE}
+                    onChange={(event) => setLast_name(event.target.value)}
                   />
                 </Box>
                 <Box>
@@ -73,6 +113,7 @@ const RegisterView = () => {
                     htmlSize={30}
                     width={"auto"}
                     bg={ColorsEnum.WHITE}
+                    onChange={(event) => setEmail(event.target.value)}
                   />
                 </Box>
                 <Box>
@@ -82,6 +123,7 @@ const RegisterView = () => {
                     htmlSize={30}
                     width={"auto"}
                     bg={ColorsEnum.WHITE}
+                    onChange={(event) => setCompany_name(event.target.value)}
                   />
                 </Box>
                 <Box>
@@ -92,27 +134,27 @@ const RegisterView = () => {
                     htmlSize={30}
                     width={"auto"}
                     bg={ColorsEnum.WHITE}
+                    onChange={(event) => setPassword(event.target.value)}
                   />
                 </Box>
                 <Flex justifyContent={"space-evenly"}>
-                  <Link to={RoutesEnum.LOGIN}>
-                    <Button
-                      bg={ColorsEnum.MEDIUM_PURPLE}
-                      size="md"
-                      leftIcon={<FaArrowCircleRight />}
-                    >
-                      Log in
-                    </Button>
-                  </Link>
-                  <Link to={RoutesEnum.REGISTER}>
-                    <Button
-                      bg={ColorsEnum.MEDIUM_PURPLE}
-                      size="md"
-                      rightIcon={<FaArrowCircleRight />}
-                    >
-                      Sign up
-                    </Button>
-                  </Link>
+                  <Button
+                    bg={ColorsEnum.MEDIUM_PURPLE}
+                    size="md"
+                    leftIcon={<FaArrowCircleRight />}
+                    onClick={() => navigate(RoutesEnum.LOGIN)}
+                  >
+                    Log in
+                  </Button>
+                  <Button
+                    isLoading={util?.progressBar}
+                    bg={ColorsEnum.MEDIUM_PURPLE}
+                    size="md"
+                    rightIcon={<FaArrowCircleRight />}
+                    onClick={() => registerHandle()}
+                  >
+                    Sign up
+                  </Button>
                 </Flex>
               </Flex>
             </Flex>

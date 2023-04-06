@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
   Box,
@@ -15,11 +15,39 @@ import { ColorsEnum } from "../../constants/ColorsEnum";
 import { TextEnum } from "../../constants/TextEnum";
 import { RoutesEnum } from "../../constants/RoutesEnum";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FaArrowCircleRight } from "react-icons/fa";
+import UtilContext from "/imports/context/UtilContext";
+import { Meteor } from "meteor/meteor";
 
 const LoginView = () => {
+  const navigate = useNavigate();
+
+  const util = useContext(UtilContext);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginHandle = () => {
+    util?.setProgressBar(true);
+
+    setTimeout(() => {
+      Meteor.loginWithPassword({ email: email }, password, (error?: Error) => {
+        if (error) {
+          util?.setProgressBar(false);
+          console.log(error.message);
+        } else {
+          navigate(RoutesEnum.DASHBOARD);
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    util?.setProgressBar(false);
+  }, []);
+
   return (
     <Body>
       <Container maxW={"container.md"} mt={20}>
@@ -55,6 +83,7 @@ const LoginView = () => {
                     htmlSize={30}
                     width={"auto"}
                     bg={ColorsEnum.WHITE}
+                    onChange={(event) => setEmail(event.target.value)}
                   />
                 </Box>
                 <Box>
@@ -65,27 +94,27 @@ const LoginView = () => {
                     htmlSize={30}
                     width={"auto"}
                     bg={ColorsEnum.WHITE}
+                    onChange={(event) => setPassword(event.target.value)}
                   />
                 </Box>
                 <Flex justifyContent={"space-evenly"}>
-                  <Link to={RoutesEnum.REGISTER}>
-                    <Button
-                      bg={ColorsEnum.MEDIUM_PURPLE}
-                      size="md"
-                      leftIcon={<FaArrowCircleRight />}
-                    >
-                      Sign up
-                    </Button>
-                  </Link>
-                  <Link to={RoutesEnum.DASHBOARD}>
-                    <Button
-                      bg={ColorsEnum.MEDIUM_PURPLE}
-                      size="md"
-                      rightIcon={<FaArrowCircleRight />}
-                    >
-                      Log in
-                    </Button>
-                  </Link>
+                  <Button
+                    bg={ColorsEnum.MEDIUM_PURPLE}
+                    size="md"
+                    leftIcon={<FaArrowCircleRight />}
+                    onClick={() => navigate(RoutesEnum.REGISTER)}
+                  >
+                    Sign up
+                  </Button>
+                  <Button
+                    isLoading={util?.progressBar}
+                    bg={ColorsEnum.MEDIUM_PURPLE}
+                    size="md"
+                    rightIcon={<FaArrowCircleRight />}
+                    onClick={() => loginHandle()}
+                  >
+                    Log in
+                  </Button>
                 </Flex>
               </Flex>
             </Flex>

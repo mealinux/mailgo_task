@@ -13,12 +13,21 @@ export const RenderRoutes = () => (
     <Routes>
       <Route path={RoutesEnum.LOGIN} element={<LoginView />}></Route>
       <Route path={RoutesEnum.REGISTER} element={<RegisterView />}></Route>
-      <Route path={RoutesEnum.DASHBOARD} element={<DashboardView />}></Route>
-      <Route path={RoutesEnum.CATEGORY} element={<CategoriesView />}></Route>
-      <Route path={RoutesEnum.CAMPAIGN} element={<CampaignsView />}></Route>
+      <Route
+        path={RoutesEnum.DASHBOARD}
+        element={<DashboardView title={"Dashboard"} />}
+      ></Route>
+      <Route
+        path={RoutesEnum.CATEGORY}
+        element={<CategoriesView title={"Category"} />}
+      ></Route>
+      <Route
+        path={RoutesEnum.CAMPAIGN}
+        element={<CampaignsView title={"Campaign"} />}
+      ></Route>
       <Route
         path={RoutesEnum.SUBSCRIBERS}
-        element={<SubscribersView />}
+        element={<SubscribersView title={"Subscribers"} />}
       ></Route>
     </Routes>
   </BrowserRouter>

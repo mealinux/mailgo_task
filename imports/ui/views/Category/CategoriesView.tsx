@@ -11,7 +11,7 @@ import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import AddCategoryView from "./AddCategoryView";
 import { Meteor } from "meteor/meteor";
 
-const CategoriesView = () => {
+const CategoriesView = (props: { title: string }) => {
   const [value, setValue] = useState("");
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -29,7 +29,7 @@ const CategoriesView = () => {
   }, []);
 
   return (
-    <Main style={{ width: "80%" }}>
+    <Main style={{ width: "80%" }} title={props.title}>
       <AddCategoryView isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
       <Flex flexDirection={"column"} padding={10}>
         <Flex justifyContent={"space-between"} alignItems={"center"} mb={10}>

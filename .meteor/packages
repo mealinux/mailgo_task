@@ -24,3 +24,5 @@ zodern:types            # Pull in type declarations from other Meteor packages
 http
 percolate:migrations
 patelutsav:meteor-migrations
+accounts-password
+ostrio:flow-router-extra

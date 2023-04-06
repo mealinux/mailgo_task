@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 
-export class CategoryController
+export class SubscriberController
 {
     init(){
         

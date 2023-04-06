@@ -10,13 +10,13 @@ import { ColorsEnum } from "../../constants/ColorsEnum";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import AddCampaignView from "./AddCampaignView";
 
-const CampaignsView = () => {
+const CampaignsView = (props: { title: string }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [dateRange, setDateRange] = useState([new Date(), new Date()]);
 
   return (
-    <Main style={{ width: "80%" }}>
+    <Main style={{ width: "80%" }} title={props.title}>
       <AddCampaignView isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
       <Flex flexDirection={"column"} padding={10}>
         <Flex justifyContent={"space-between"} alignItems={"center"} mb={10}>
