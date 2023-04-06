@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Main from "../Main";
 import {
   Card,
@@ -13,9 +13,9 @@ import { FaRegEnvelope, FaTable, FaUsers, FaUsersSlash } from "react-icons/fa";
 
 import { ColorsEnum } from "../constants/ColorsEnum";
 
-const DashboardView = () => {
+const DashboardView = (props: { title: string }) => {
   return (
-    <Main style={{ width: "80%" }}>
+    <Main style={{ width: "80%" }} title={props.title}>
       <Flex padding={5} gap={5} alignItems={"center"} justifyContent={"start"}>
         <Flex justifyContent={"space-evenly"} alignItems={"center"} gap={5}>
           <Card minW={200}>

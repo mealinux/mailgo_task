@@ -9,8 +9,12 @@ import {
   FaTable,
 } from "react-icons/fa";
 import { TextEnum } from "../constants/TextEnum";
+import { useNavigate } from "react-router";
+import { RoutesEnum } from "../constants/RoutesEnum";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
   return (
     <Box bg={ColorsEnum.WHITE} width={"15%"}>
       <Flex flexDirection={"column"} alignItems={"center"}>
@@ -21,7 +25,7 @@ const Sidebar = () => {
           gap={2}
         >
           <Button
-            isActive
+            isActive={RoutesEnum.DASHBOARD === window.location.pathname}
             textColor={ColorsEnum.GREY}
             _hover={{
               textColor: ColorsEnum.DARKEST_PURPLE,
@@ -34,6 +38,7 @@ const Sidebar = () => {
               textColor: ColorsEnum.DARKEST_PURPLE,
               bg: ColorsEnum.WHITE,
             }}
+            onClick={() => navigate(RoutesEnum.DASHBOARD)}
             padding={3}
             borderRadius={30}
             width={130}
@@ -46,19 +51,20 @@ const Sidebar = () => {
             </Flex>
           </Button>
           <Button
-            as="button"
+            isActive={RoutesEnum.SUBSCRIBERS === window.location.pathname}
             textColor={ColorsEnum.GREY}
             _hover={{
               textColor: ColorsEnum.DARKEST_PURPLE,
             }}
             _active={{
-              bg: ColorsEnum.LIGHT_PURPLE,
-              textColor: ColorsEnum.MEDIUM_PURPLE,
+              bg: ColorsEnum.LIGHTEST_PURPLE,
+              textColor: ColorsEnum.DARKEST_PURPLE,
             }}
             _focus={{
               textColor: ColorsEnum.DARKEST_PURPLE,
               bg: ColorsEnum.WHITE,
             }}
+            onClick={() => navigate(RoutesEnum.SUBSCRIBERS)}
             padding={3}
             borderRadius={30}
             width={130}
@@ -71,19 +77,20 @@ const Sidebar = () => {
             </Flex>
           </Button>
           <Button
-            as="button"
+            isActive={RoutesEnum.CATEGORY === window.location.pathname}
             textColor={ColorsEnum.GREY}
             _hover={{
               textColor: ColorsEnum.DARKEST_PURPLE,
             }}
             _active={{
-              bg: ColorsEnum.LIGHT_PURPLE,
-              textColor: ColorsEnum.MEDIUM_PURPLE,
+              bg: ColorsEnum.LIGHTEST_PURPLE,
+              textColor: ColorsEnum.DARKEST_PURPLE,
             }}
             _focus={{
               textColor: ColorsEnum.DARKEST_PURPLE,
               bg: ColorsEnum.WHITE,
             }}
+            onClick={() => navigate(RoutesEnum.CATEGORY)}
             padding={3}
             borderRadius={30}
             width={130}
@@ -96,19 +103,20 @@ const Sidebar = () => {
             </Flex>
           </Button>
           <Button
-            as="button"
+            isActive={RoutesEnum.CAMPAIGN === window.location.pathname}
             textColor={ColorsEnum.GREY}
             _hover={{
               textColor: ColorsEnum.DARKEST_PURPLE,
             }}
             _active={{
-              bg: ColorsEnum.LIGHT_PURPLE,
-              textColor: ColorsEnum.MEDIUM_PURPLE,
+              bg: ColorsEnum.LIGHTEST_PURPLE,
+              textColor: ColorsEnum.DARKEST_PURPLE,
             }}
             _focus={{
               textColor: ColorsEnum.DARKEST_PURPLE,
               bg: ColorsEnum.WHITE,
             }}
+            onClick={() => navigate(RoutesEnum.CAMPAIGN)}
             padding={3}
             borderRadius={30}
             width={130}
