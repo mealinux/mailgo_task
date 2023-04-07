@@ -19,13 +19,8 @@ export const getUsers = (index?: number, offset?: number) =>
 
 
 export const createUser = (user: any) =>
-{
-    console.log(342342342);
-    
-    Accounts.createUser({...user}, (error) => {
-        console.log(error?.message);
-        
-    });
+{    
+   
 }
 
 export const updateUser = (id?: number, data?: any) =>

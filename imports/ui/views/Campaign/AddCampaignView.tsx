@@ -60,11 +60,12 @@ const AddCampaignView = (props: {
             text={"Close"}
             customClickColor={ColorsEnum.LIGHTEST_PURPLE}
             customContentColor={ColorsEnum.GREY}
-            onClickForOpen={props.onClose}
+            onClick={props.onClose}
           />
           <OutlineButtonCom
             text={"Add"}
             icon={<FaPlus />}
+            onClick={props.onClose}
             customClickColor={ColorsEnum.LIGHTEST_PURPLE}
             customContentColor={ColorsEnum.DARKEST_PURPLE}
           />

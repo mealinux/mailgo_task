@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Main from "../../Main";
 import { Flex, useDisclosure } from "@chakra-ui/react";
 import DataTableCom from "../../components/DataTableCom";
@@ -9,11 +9,21 @@ import { ColorsEnum } from "../../constants/ColorsEnum";
 
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import AddSubscriberView from "./AddSubscriberView";
+import { Meteor } from "meteor/meteor";
 
 const SubscribersView = (props: { title: string }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [dateRange, setDateRange] = useState([new Date(), new Date()]);
+
+  useEffect(() => {
+    Meteor.call("get-subscribers", {}, (err: { reason: any }, res: any) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(res);
+    });
+  }, []);
 
   return (
     <Main style={{ width: "80%" }} title={props.title}>
@@ -36,7 +46,7 @@ const SubscribersView = (props: { title: string }) => {
               customContentColor={ColorsEnum.RED}
             />
             <OutlineButtonCom
-              onClickForOpen={onOpen}
+              onClick={onOpen}
               text={"New"}
               icon={<FaPlus />}
               customClickColor={ColorsEnum.LIGHTEST_PURPLE}
