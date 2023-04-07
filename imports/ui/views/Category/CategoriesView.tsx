@@ -43,7 +43,7 @@ const CategoriesView = (props: { title: string }) => {
           />
           <Flex justifyContent={"end"}>
             <OutlineButtonCom
-              onClickForOpen={onOpen}
+              onClick={onOpen}
               text={"New"}
               icon={<FaPlus />}
               customClickColor={ColorsEnum.LIGHTEST_PURPLE}

@@ -11,7 +11,7 @@ import {
 import { ColorsEnum } from "../constants/ColorsEnum";
 import { TextEnum } from "../constants/TextEnum";
 
-import { FaRegEnvelope, FaRegCalendarAlt } from "react-icons/fa";
+import { FaRegEnvelope, FaRegCalendarAlt, FaSignOutAlt } from "react-icons/fa";
 import { Meteor } from "meteor/meteor";
 import { useNavigate } from "react-router";
 import { RoutesEnum } from "../constants/RoutesEnum";
@@ -78,7 +78,8 @@ const Navbar = (props: { title: string }) => {
             </MenuButton>
             <MenuList>
               <MenuItem as="button" onClick={() => logoutHandle()}>
-                Logout
+                <FaSignOutAlt />
+                <Text ml={1}> Logout</Text>
               </MenuItem>
             </MenuList>
           </Menu>

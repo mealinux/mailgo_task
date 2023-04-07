@@ -1,23 +1,24 @@
 import React, { ReactElement } from "react";
 
-import { Box, Text } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 
 const OutlineButtonCom = (props: {
   text?: string;
   icon?: ReactElement;
   customContentColor: string;
   customClickColor?: string;
-  onClickForOpen?: any;
+  isLoading?: boolean;
+  onClick?: VoidFunction;
 }) => {
   return (
-    <Box
-      as="button"
+    <Button
+      isLoading={props.isLoading}
       borderColor={props.customContentColor}
       fontWeight={"bold"}
       border={"1px"}
       borderRadius={5}
       color={props.customContentColor}
-      onClick={props.onClickForOpen}
+      onClick={props.onClick}
       _active={{
         backgroundColor: props.customClickColor,
       }}
@@ -29,7 +30,7 @@ const OutlineButtonCom = (props: {
     >
       {props.icon}
       <Text ml={props.text ? 1 : 0}> {props.text}</Text>
-    </Box>
+    </Button>
   );
 };
 

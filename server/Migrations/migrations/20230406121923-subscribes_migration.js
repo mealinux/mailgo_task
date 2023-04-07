@@ -1,6 +1,6 @@
 module.exports = {
   async up(db, client) {
-    await db.collection('subscribes').updateMany(
+    await db.collection('subscribers').updateMany(
       {},
       {
         $set: {
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   async down(db) {
-    await db.collection('subscribes').updateMany(
+    await db.collection('subscribers').updateMany(
       {},
       {
         $unset: {
