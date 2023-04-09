@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Main from "../../Main";
 import { Flex, useDisclosure } from "@chakra-ui/react";
-import DataTableCom from "../../components/DataTableCom";
+import DataTableCom from "../../components/DataTableCom/DataTableCom";
 
 import { FaPlus } from "react-icons/fa";
 import OutlineButtonCom from "../../components/OutlineButtonCom";
@@ -37,7 +37,7 @@ const CampaignsView = (props: { title: string }) => {
             />
           </Flex>
         </Flex>
-        <DataTableCom />
+        {/* <DataTableCom /> */}
       </Flex>
     </Main>
   );

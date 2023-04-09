@@ -1,9 +1,10 @@
-import { Mongo } from "meteor/mongo";
 import SubscriberModel from "/imports/models/SubscriberModel";
-import { Meteor } from "meteor/meteor";
+import { DataTableEnum } from "/imports/ui/constants/DataTableEnum";
+import { SubscribersCollection } from "/imports/api/subscribers";
+import { Filter } from "../Controller/SubscriberController/methods/Filters";
 
 
-export const db = new Mongo.Collection('subscribers');
+const db = SubscribersCollection;
 
 
 export const getSubscriber = (id?: number) =>
@@ -11,15 +12,21 @@ export const getSubscriber = (id?: number) =>
     
 }
 
-export const getSubscribers = (index?: number, offset?: number) =>
-{
-    return db.find().fetch();
+export const getSubscribers = (offset: number, filters?: {dateRange : Array<Date>, text: string}) =>
+{    
+    const filteredData = Filter(filters);
+    
+    const data = db.find(filteredData, {skip: offset, limit: DataTableEnum.LIMIT, sort: ['createdAt', 'desc']}).fetch();
+        
+    const totalCount = db.find(filteredData).count();
+
+    return { data, totalCount };
 }
 
 
 export const addSubscriber = (subscriber?: SubscriberModel) =>
 {
-    db.insert({...subscriber});
+    db.insert({...subscriber, createdAt: new Date(), updatedAt: new Date()});
 }
 
 export const updateSubscriber = (id?: number, data?: any) =>
