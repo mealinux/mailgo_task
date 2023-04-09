@@ -2,10 +2,12 @@ export enum ColorsEnum {
   ORANGE = "#FF6A00",
   BLUE = "#00B7FE",
   RED = "#FD2254",
+
   BLACK = "#15192C",
   GREY = "#92959E",
   LIGHT_GREY = "#D0D2DA",
   WHITE = "#F5F5F7",
+
   LIGHTEST_PURPLE = "#E8E0FF",
   LIGHT_PURPLE = "#A7A4C5",
   MEDIUM_PURPLE = "#837FA3",

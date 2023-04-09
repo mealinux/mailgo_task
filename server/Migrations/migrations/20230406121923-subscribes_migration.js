@@ -14,7 +14,7 @@ module.exports = {
       {},
       {
         $set: {
-          createdAt: new Date(),
+          createdAt?: new Date(),
           updatedAt: new Date(),
         },
       }
@@ -36,7 +36,7 @@ module.exports = {
       {},
       {
         $unset: {
-          createdAt: '',
+          createdAt?: '',
           updatedAt: '',
         },
       }

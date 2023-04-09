@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { ReactElement, useContext, useEffect } from "react";
 import { Spinner } from "@chakra-ui/react";
 
 import DataTable from "react-data-table-component";
@@ -6,8 +6,9 @@ import DataTable from "react-data-table-component";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { TextEnum } from "../../constants/TextEnum";
 import { PaginationChangePage } from "react-data-table-component/dist/src/DataTable/types";
-import UtilContext from "/imports/context/UtilContext";
 import { DataTableEnum } from "../../constants/DataTableEnum";
+import SubscriberModel from "/imports/models/SubscriberModel";
+import { useModal } from "/imports/context/UtilContext";
 
 const customStyles = {
   headCells: {
@@ -24,21 +25,21 @@ const customStyles = {
 
 const DataTableCom = (props: {
   onChangePage: PaginationChangePage;
-  data: Array<Object>;
+  data: any;
   totalCount: number;
   columns: Array<Object>;
 }) => {
-  const utilContext = useContext(UtilContext);
+  const { progressBar, setProgressBar } = useModal();
 
   useEffect(() => {
-    utilContext?.setProgressBar(false);
+    setProgressBar(false);
   }, []);
 
   return (
     <DataTable
       columns={props.columns}
-      data={props.data!}
-      progressPending={utilContext?.progressBar}
+      data={props.data}
+      progressPending={progressBar}
       progressComponent={<Spinner size="xl" />}
       paginationComponentOptions={{ noRowsPerPage: true }}
       paginationIconNext={<FaArrowRight />}

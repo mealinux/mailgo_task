@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Main from "../../Main";
 import { Center, Flex, Input, Spinner, useDisclosure } from "@chakra-ui/react";
 import DataTableCom from "../../components/DataTableCom/DataTableCom";
@@ -11,64 +11,102 @@ import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import { Meteor } from "meteor/meteor";
 import { DataTableEnum } from "../../constants/DataTableEnum";
 import { SubscribersData } from "./data/SubscribersData";
-import AddSubscriberView from "./AddSubscriberView";
 import { DataColumns } from "./data/DataColumns";
-import UtilContext from "/imports/context/UtilContext";
+import { ActionEnum } from "../../constants/ActionEnum";
+import SubscriberModel from "/imports/models/SubscriberModel";
+import ModalView from "./ModalView";
+import { useModal } from "/imports/context/UtilContext";
 
 const SubscribersView = (props: { title: string }) => {
+  const { setProgressBar } = useModal();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const utilContext = useContext(UtilContext);
+  //for modal
+  const [selectedSubscriber, setSelectedSubscriber] = useState<SubscriberModel>(
+    {} as SubscriberModel
+  );
+
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalButtonText, setModalButtonText] = useState("");
+  const [modalIcon, setModalIcon] = useState(<FaPlus />);
+
+  const [name, setName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  //---------------
+
+  const [actionType, setActionType] = useState(ActionEnum.ADD);
 
   const [showFilter, setShowFilter] = useState(false);
 
-  const [filterDateRange, setFilterDateRange] = useState([
-    new Date(),
-    new Date(),
-  ]);
+  const [filterDateRange, setFilterDateRange] = useState([]);
 
   const [filterText, setFilterText] = useState("");
 
   const [dataOffset, setDataOffset] = useState(0);
 
   const [subscribeData, setSubscribeData] = useState<{
-    data: Array<Object>;
+    subscribers: { subscriber: SubscriberModel; columns: ReactElement };
     totalCount: number;
   }>();
 
   useEffect(() => {
-    utilContext?.setProgressBar(false);
+    setProgressBar(false);
     handleChangeDataTable();
   }, []);
 
   const handleChangeDataTable = (
     offset: number = 0,
-    dateRange?: Array<Date>,
-    text?: string
+    dateRange: Array<Date> = [],
+    text: string = ""
   ) => {
     Meteor.callAsync("get-subscribers", offset, {
       dateRange,
       text,
     })
-      .then((res: { data: Array<Object>; totalCount: number }) => {
-        const data = SubscribersData(res);
+      .then((data: { data: Array<SubscriberModel>; totalCount: number }) => {
+        const dataAll = SubscribersData({
+          data: data.data,
+          totalCount: data.totalCount,
+          onOpen,
+          handleChangeDataTable,
+          setModalTitle,
+          setModalButtonText,
+          setModalIcon,
+          setName,
+          setLastName,
+          setEmail,
+          setActionType,
+          setSelectedSubscriber,
+        });
 
-        setSubscribeData(data);
+        setSubscribeData(dataAll);
       })
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => utilContext?.setProgressBar(false));
+      .finally(() => setProgressBar(false));
   };
 
   return (
     <Main style={{ width: "80%" }} title={props.title}>
-      <AddSubscriberView
+      <ModalView
         isOpen={isOpen}
         onClose={onClose}
         onOpen={onOpen}
-        setSubscribeData={setSubscribeData}
         handleChangeDataTable={handleChangeDataTable}
+        actionType={actionType}
+        name={name}
+        email={email}
+        last_name={last_name}
+        modalTitle={modalTitle}
+        modalButtonText={modalButtonText}
+        modalIcon={modalIcon}
+        setName={setName}
+        setLastName={setLastName}
+        setEmail={setEmail}
+        selectedSubscriber={selectedSubscriber}
       />
       <Flex flexDirection={"column"} padding={10}>
         <Flex justifyContent={"space-between"} alignItems={"center"} mb={10}>
@@ -83,7 +121,7 @@ const SubscribersView = (props: { title: string }) => {
 
                   handleChangeDataTable(dataOffset, date);
 
-                  utilContext?.setProgressBar(true);
+                  setProgressBar(true);
                 }}
               />
             ) : (
@@ -126,6 +164,7 @@ const SubscribersView = (props: { title: string }) => {
                 if (showFilter) {
                   setShowFilter(false);
                   handleChangeDataTable();
+                  setFilterDateRange([]);
                 } else {
                   setShowFilter(true);
                 }
@@ -138,7 +177,19 @@ const SubscribersView = (props: { title: string }) => {
               customContentColor={ColorsEnum.RED}
             />
             <OutlineButtonCom
-              onClick={onOpen}
+              onClick={() => {
+                setModalTitle("Add New A Subscriber");
+                setModalButtonText("ADD");
+                setModalIcon(<FaPlus />);
+
+                setActionType(ActionEnum.ADD);
+
+                setName("");
+                setEmail("");
+                setLastName("");
+
+                onOpen();
+              }}
               text={"New"}
               icon={<FaPlus />}
               customClickColor={ColorsEnum.LIGHTEST_PURPLE}
@@ -148,7 +199,7 @@ const SubscribersView = (props: { title: string }) => {
         </Flex>
         {subscribeData ? (
           <DataTableCom
-            data={subscribeData.data}
+            data={subscribeData.subscribers}
             totalCount={subscribeData.totalCount}
             columns={DataColumns()}
             onChangePage={(page, totalRows) => {

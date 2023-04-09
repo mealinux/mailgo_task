@@ -9,11 +9,13 @@ export const Filter = (filters?: {dateRange : Array<Date>, text: string}) => {
   const text = filters?.text;
 
 
-  if(text){
+  if(text?.length! > 2){
     filterText = { $text: { $search: text } }
   }
 
-  if(filters?.dateRange){
+  if(filters?.dateRange.length){
+    console.log(filters?.dateRange);
+    
     filterDate = { createdAt: { $gte: firstDate, $lte: endDate } };
   }
 
