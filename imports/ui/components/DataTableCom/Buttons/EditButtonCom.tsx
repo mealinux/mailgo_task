@@ -4,9 +4,10 @@ import { FaEdit } from "react-icons/fa";
 import { ColorsEnum } from "/imports/ui/constants/ColorsEnum";
 import OutlineButtonCom from "../../OutlineButtonCom";
 
-const EditButtonCom = (props: { onClick?: VoidFunction }) => {
+const EditButtonCom = (props: { onClick: VoidFunction }) => {
   return (
     <OutlineButtonCom
+      onClick={() => props.onClick()}
       text={"Edit"}
       icon={<FaEdit />}
       customClickColor={ColorsEnum.LIGHTEST_PURPLE}

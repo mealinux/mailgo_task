@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useContext, useReducer } from "react";
 import {
   Modal,
   ModalBody,
@@ -9,7 +9,6 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 
-import { FaPlus } from "react-icons/fa";
 import OutlineButtonCom from "../components/OutlineButtonCom";
 import { ColorsEnum } from "../constants/ColorsEnum";
 import { TextEnum } from "../constants/TextEnum";
@@ -17,10 +16,12 @@ import { TextEnum } from "../constants/TextEnum";
 const ModalUtil = (props: {
   children: ReactElement;
   isOpen: boolean;
-  onOpen: any;
-  onClose: any;
-  onClick?: VoidFunction;
-  title?: string;
+  onOpen: VoidFunction;
+  onClose: VoidFunction;
+  onClick: CallableFunction;
+  title: string;
+  icon: ReactElement;
+  buttonText: string;
 }) => {
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose}>
@@ -39,9 +40,9 @@ const ModalUtil = (props: {
             onClick={props.onClose}
           />
           <OutlineButtonCom
-            text={"Add"}
-            icon={<FaPlus />}
-            onClick={props.onClick}
+            text={props.buttonText}
+            icon={props.icon}
+            onClick={() => props.onClick()}
             customClickColor={ColorsEnum.LIGHTEST_PURPLE}
             customContentColor={ColorsEnum.DARKEST_PURPLE}
           />

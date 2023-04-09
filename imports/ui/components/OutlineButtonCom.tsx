@@ -18,7 +18,9 @@ const OutlineButtonCom = (props: {
       border={"1px"}
       borderRadius={5}
       color={props.customContentColor}
-      onClick={props.onClick}
+      onClick={() => {
+        props.onClick!();
+      }}
       _active={{
         backgroundColor: props.customClickColor,
       }}

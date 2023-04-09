@@ -5,8 +5,7 @@ import { RenderRoutes } from "../routes/Routes";
 import "@fontsource/inter";
 
 import { ColorsEnum } from "./constants/ColorsEnum";
-import UtilContext from "../context/UtilContext";
-import UtilModel from "../models/system/UtilModel";
+import { ModalProvider } from "../context/UtilContext";
 
 /* const contentCenter = {
   height: "100vh",
@@ -16,8 +15,6 @@ import UtilModel from "../models/system/UtilModel";
 }; */
 
 export const App = () => {
-  const [progressBar, setProgressBar] = useState<any>({} as UtilModel);
-
   const theme = extendTheme({
     styles: {
       global: () => ({
@@ -34,10 +31,10 @@ export const App = () => {
   });
 
   return (
-    <UtilContext.Provider value={{ progressBar, setProgressBar }}>
+    <ModalProvider>
       <ChakraProvider theme={theme}>
         <RenderRoutes />
       </ChakraProvider>
-    </UtilContext.Provider>
+    </ModalProvider>
   );
 };

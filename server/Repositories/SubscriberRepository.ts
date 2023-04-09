@@ -24,17 +24,21 @@ export const getSubscribers = (offset: number, filters?: {dateRange : Array<Date
 }
 
 
-export const addSubscriber = (subscriber?: SubscriberModel) =>
+export const addSubscriber = (subscriber: SubscriberModel) =>
 {
     db.insert({...subscriber, createdAt: new Date(), updatedAt: new Date()});
 }
 
-export const updateSubscriber = (id?: number, data?: any) =>
+export const updateSubscriber = (subscriber: SubscriberModel, newSubscriberData: {
+    name: string;
+    last_name: string;
+    email: string;
+  }) =>
 {
-    
+    db.update({ _id: subscriber._id }, {...newSubscriberData,  createdAt: subscriber.createdAt, updatedAt: new Date()});
 }
 
-export const deleteSubscriber = (id?: number) =>
+export const deleteSubscriber = (subscriber: SubscriberModel) =>
 {
-    
+    db.remove({ _id: subscriber._id });
 }
