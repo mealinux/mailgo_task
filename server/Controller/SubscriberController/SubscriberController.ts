@@ -12,8 +12,9 @@ export class SubscriberController
                
                 addSubscriber(subscriber);
             },
-            'get-subscribers' () {
-                return getSubscribers();
+            'get-subscribers'  (offset: number, filters?:{dateRange: Array<Date>, text: string}) {
+                    
+                return getSubscribers(offset, filters);
             }
         })
     }

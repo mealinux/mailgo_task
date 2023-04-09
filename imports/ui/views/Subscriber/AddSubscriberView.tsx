@@ -1,28 +1,17 @@
 import React, { useState } from "react";
-import {
-  Flex,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useToast,
-} from "@chakra-ui/react";
-import OutlineButtonCom from "../../components/OutlineButtonCom";
+import { Flex, Input, useToast } from "@chakra-ui/react";
 import { ColorsEnum } from "../../constants/ColorsEnum";
 
-import { FaPlus } from "react-icons/fa";
-import { TextEnum } from "../../constants/TextEnum";
 import { Meteor } from "meteor/meteor";
 import SubscriberModel from "/imports/models/SubscriberModel";
+import ModalUtil from "../../utils/ModalUtil";
 
 const AddSubscriberView = (props: {
   isOpen: boolean;
   onOpen: any;
   onClose: any;
+  setSubscribeData: any;
+  handleChangeDataTable: VoidFunction;
 }) => {
   const [name, setName] = useState("");
   const [last_name, setLast_name] = useState("");
@@ -33,10 +22,8 @@ const AddSubscriberView = (props: {
   const handleAddSubscriber = () => {
     const subscriber: SubscriberModel = { name, last_name, email };
 
-    Meteor.call("add-subscriber", subscriber, (err: any, res: any) => {
+    Meteor.call("add-subscriber", subscriber, (err: Meteor.Error, res: any) => {
       if (err) {
-        console.log(err);
-
         toast({
           title: "Oops!",
           description: err.reason,
@@ -45,75 +32,53 @@ const AddSubscriberView = (props: {
           isClosable: true,
         });
       } else {
+        props.handleChangeDataTable();
         props.onClose();
       }
     });
   };
 
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader fontSize={TextEnum.H6_SIZE}>Add New Category</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Flex flexDirection={"column"}>
-            <Input
-              placeholder="First Name"
-              size="md"
-              htmlSize={30}
-              mb={4}
-              width={"auto"}
-              bg={ColorsEnum.WHITE}
-              onChange={(event) => setName(event.target.value)}
-            />
-            <Input
-              placeholder="Last Name"
-              size="md"
-              htmlSize={30}
-              mb={4}
-              width={"auto"}
-              bg={ColorsEnum.WHITE}
-              onChange={(event) => setLast_name(event.target.value)}
-            />
-            <Input
-              placeholder="E-Mail"
-              size="md"
-              htmlSize={30}
-              width={"auto"}
-              bg={ColorsEnum.WHITE}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </Flex>
-        </ModalBody>
-
-        <ModalFooter gap={4}>
-          <OutlineButtonCom
-            text={"Close"}
-            customClickColor={ColorsEnum.LIGHTEST_PURPLE}
-            customContentColor={ColorsEnum.GREY}
-            onClick={props.onClose}
-          />
-          <OutlineButtonCom
-            text={"Add"}
-            icon={<FaPlus />}
-            onClick={() => handleAddSubscriber()}
-            customClickColor={ColorsEnum.LIGHTEST_PURPLE}
-            customContentColor={ColorsEnum.DARKEST_PURPLE}
-          />
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+    <ModalUtil
+      onClick={() => handleAddSubscriber()}
+      title={"Add New Category"}
+      isOpen={props.isOpen}
+      onClose={() => {
+        console.log(55555);
+        props.onClose();
+      }}
+      onOpen={props.onOpen}
+    >
+      <Flex flexDirection={"column"}>
+        <Input
+          placeholder="First Name"
+          size="md"
+          htmlSize={30}
+          mb={4}
+          width={"auto"}
+          bg={ColorsEnum.WHITE}
+          onChange={(event) => setName(event.target.value)}
+        />
+        <Input
+          placeholder="Last Name"
+          size="md"
+          htmlSize={30}
+          mb={4}
+          width={"auto"}
+          bg={ColorsEnum.WHITE}
+          onChange={(event) => setLast_name(event.target.value)}
+        />
+        <Input
+          placeholder="E-Mail"
+          size="md"
+          htmlSize={30}
+          width={"auto"}
+          bg={ColorsEnum.WHITE}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+      </Flex>
+    </ModalUtil>
   );
 };
 
 export default AddSubscriberView;
-function toast(arg0: {
-  title: string;
-  description: any;
-  status: string;
-  duration: number;
-  isClosable: boolean;
-}) {
-  throw new Error("Function not implemented.");
-}

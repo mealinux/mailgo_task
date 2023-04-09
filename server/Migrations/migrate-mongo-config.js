@@ -3,10 +3,10 @@
 const config = {
   mongodb: {
     // TODO Change (or review) the url to your MongoDB:
-    url: "mongodb://127.0.0.1:3001/meteor",
+    url: "mongodb://127.0.0.1:3001",
 
     // TODO Change this to your database name:
-    databaseName: "mailgo",
+    databaseName: "meteor",
 
     options: {
       useNewUrlParser: true, // removes a deprecation warning when connecting
