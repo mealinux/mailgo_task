@@ -7,7 +7,10 @@ import DashboardView from "../ui/views/DashboardView";
 import CategoriesView from "../ui/views/Category/CategoriesView";
 import CampaignsView from "../ui/views/Campaign/CampaignsView";
 import SubscribersView from "../ui/views/Subscriber/SubscribersView";
-import { CampaignCallback } from "../ui/Verifying/CampaignVerify";
+import { CampaignVerification } from "../ui/Verification/CampaignVerification";
+import { NotFoundView } from "../ui/views/Util/NotFoundView";
+import { UnsubscribeVerification } from "../ui/Verification/UnsubscribeVerification";
+import { UnsubscribeSuccessView } from "../ui/views/Util/UnsubscribeSuccessView";
 
 export const RenderRoutes = () => (
   <BrowserRouter>
@@ -15,10 +18,18 @@ export const RenderRoutes = () => (
       <Route path={RoutesEnum.LOGIN} element={<LoginView />}></Route>
       <Route path={RoutesEnum.REGISTER} element={<RegisterView />}></Route>
 
-      <Route path={RoutesEnum.UNSUBSCRIBE + "/:hash"}></Route>
+      <Route
+        path={RoutesEnum.UNSUBSCRIBED_SUCCESS + "/:hash"}
+        Component={UnsubscribeSuccessView}
+      ></Route>
+
+      <Route
+        path={RoutesEnum.UNSUBSCRIBE + "/:hash"}
+        Component={UnsubscribeVerification}
+      ></Route>
       <Route
         path={RoutesEnum.VERIFY + "/:hash"}
-        Component={CampaignCallback}
+        Component={CampaignVerification}
       ></Route>
       <Route
         path={RoutesEnum.DASHBOARD}
@@ -36,6 +47,8 @@ export const RenderRoutes = () => (
         path={RoutesEnum.SUBSCRIBERS}
         element={<SubscribersView title={"Subscribers"} />}
       ></Route>
+
+      <Route path={RoutesEnum.NOTFOUND} element={<NotFoundView />}></Route>
     </Routes>
   </BrowserRouter>
 );

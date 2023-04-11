@@ -8,6 +8,8 @@ export class SubscriberController
     init() {
         Meteor.methods({
             'add-subscriber' (subscriber: SubscriberModel) {
+                subscriber.state = 1;
+                
                 subscriberValidationForAdd(subscriber);
                
                 addSubscriber(subscriber);
@@ -27,9 +29,9 @@ export class SubscriberController
 
                 deleteSubscriber(subscriber);
             },
-            'get-subscribers'  (offset?: number, filters?:{dateRange?: Array<Date>, text?: string}) {
+            'get-subscribers'  (offset?: number, state?: Array<number>, filters?:{dateRange?: Array<Date>, text?: string}) {
                 
-                return getSubscribers(offset, filters);
+                return getSubscribers(offset, state, filters);
             }
         })
     }

@@ -1,5 +1,5 @@
 import React, { Dispatch, ReactElement, SetStateAction, useState } from "react";
-import { Flex, Input, Select, Text, Textarea } from "@chakra-ui/react";
+import { Flex, Input, Text, Textarea } from "@chakra-ui/react";
 import { ColorsEnum } from "../../constants/ColorsEnum";
 
 import ModalUtil from "../../utils/ModalUtil";
@@ -9,8 +9,6 @@ import { Actions } from "./Actions";
 import CampaignModel from "/imports/models/CampaignModel";
 import CategoryModel from "/imports/models/CategoryModel";
 import { Categories } from "./data/Categories";
-import MailModel from "/imports/models/system/MailModel";
-import { SendSubscriptionMail } from "./MailOperations/SendSubscriptionMail";
 
 const ModalView = (props: {
   isOpen: boolean;
@@ -49,13 +47,16 @@ const ModalView = (props: {
       onClickAddAndSend={() => {
         Actions({ actionData: actionData, mailSend: true });
 
-        const mailData: MailModel = {
+        /* const mailData: MailModel = {
           subject: props.name,
           content: props.description,
           target: props.target,
         };
 
-        SendSubscriptionMail({ mailData });
+        SendSubscriptionMail({
+          mailData,
+          selectedCampaign: props.selectedCampaign,
+        }); */
       }}
       isOpen={props.isOpen}
       onClose={() => props.onClose()}

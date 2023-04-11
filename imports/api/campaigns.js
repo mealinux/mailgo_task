@@ -1,3 +1,3 @@
 import { Mongo } from 'meteor/mongo';
 
-export const CampaignsCollection = new Mongo.Collection('campaigns');
+export const CampaignCollection = new Mongo.Collection('campaigns');

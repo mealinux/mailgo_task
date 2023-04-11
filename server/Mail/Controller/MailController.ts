@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor"
 import MailModel from "/imports/models/system/MailModel"
 import { SendInfoMail, SendMailForSubscription } from "../methods/SendMail";
+import CampaignModel from "/imports/models/CampaignModel";
 
 export class MailController {
 
@@ -11,9 +12,9 @@ export class MailController {
     mailOperations = () => {
 
         Meteor.methods({
-            'send-subscription-mail' (maildata: MailModel){
+            'send-subscription-mail' (maildata: MailModel, selectedCampaign: CampaignModel){
                 
-                SendMailForSubscription(maildata)
+                SendMailForSubscription(maildata, selectedCampaign)
             },
             'send-info-mail' (maildata: MailModel, subscriberId: string){
                 

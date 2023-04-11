@@ -20,11 +20,11 @@ export const campaignValidationForAdd = (newCampaignData: {
 
 
     if(! newCampaignData.name || ! newCampaignData.target){
-        throw new Meteor.Error('Oops!', 'Campaign Name and Target can\'t be empty')
+        throw new Meteor.Error('function campaignValidationForAdd => not found', 'Campaign Name and Target can\'t be empty')
     }
 
     if(! categoryId){
-        throw new Meteor.Error('Oops!', 'Any category didn\'t select')
+        throw new Meteor.Error('function campaignValidationForAdd => not found', 'Any category didn\'t select')
     }
 }
 
@@ -45,11 +45,11 @@ export const campaignValidationForUpdate = (newCampaignData: {
     check(categoryId, String)
 
     if(! newCampaignData.name || ! newCampaignData.target){
-        throw new Meteor.Error('Oops!', 'Campaign Name and Target can\'t be empty')
+        throw new Meteor.Error('function campaignValidationForUpdate => not found', 'Campaign Name and Target can\'t be empty')
     }
 
     if(! categoryId){
-        throw new Meteor.Error('Oops!', 'Any category didn\'t select')
+        throw new Meteor.Error('function campaignValidationForUpdate => not found', 'Any category didn\'t select')
     }
 }
 

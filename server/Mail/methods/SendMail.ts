@@ -9,6 +9,15 @@ import { getSubscribers } from "/server/Repositories/SubscriberRepository";
 import { DataTableEnum } from "/imports/ui/constants/DataTableEnum";
 
 import Queue from 'bull';
+import { MailSendCollection } from "/imports/api/mail_send_actions";
+import { CampaignCollection } from "/imports/api/campaigns";
+
+
+import { TimesTamp } from '../../helpers/TimesTamp'
+
+
+
+
 
 const REDIS_URL = Meteor.settings.private.REDIS_URL;
 
@@ -19,6 +28,13 @@ export const CampaignSubscriberHashDB = CampaignSubscriberHashCollection;
 export const UnsubscriberHashDB = UnsubscriberHashCollection;
 
 export const MailSendInfoDB = MailSendInfoCollection;
+
+export const MailSendDB = MailSendCollection;
+
+export const CampaignDB = CampaignCollection;
+
+
+
 
 
 
@@ -31,68 +47,104 @@ export const SendInfoMail = (mailData: MailModel,  subscriberId?: string)=>{
 
 
 
-export const SendMailForSubscription = async (mailData: MailModel) => {
 
-    const hashForUnsubcribe = CreateHash();
-    const hashCampaign = CreateHash()
 
-    const subscriptionContent = MailPrepareForSubscription(mailData, hashCampaign, hashForUnsubcribe);
 
+export const SendMailForSubscription = async (mailData: MailModel, selectedCampaign: any) => {
+    
     let subscribers = getSubscribers();
 
+    const campaign =  CampaignDB.findOne({ _id: selectedCampaign._id});
+    
     let currentTotalSubscribers = 0;
 
     while(subscribers.data.length > 0){
         
         let counterLimit = 0;
         while(counterLimit < subscribers.data.length){
-            mailData.content = subscriptionContent;
-            mailData.toEmail = subscribers.data[counterLimit].email;
-            
-            await mailQueue.add(mailData); 
-            await new Promise((resolve) => setTimeout(resolve, 750));
 
-            CampaignSubscriberHashDB.insert({ subscriber_id: subscribers.data[counterLimit]._id, target: mailData.target, hash: hashCampaign })
-    
-            UnsubscriberHashDB.insert({ subscriber_id: subscribers.data[counterLimit]._id, hash: hashForUnsubcribe })
+            const hashForUnsubcribe = CreateHash();
+            const hashCampaign = CreateHash()
+        
+            const subscriptionContent = MailPrepareForSubscription(mailData, hashCampaign, hashForUnsubcribe);
+
+            const newMailContent = {
+                subject: mailData.subject,
+                content: subscriptionContent,
+                toEmail: subscribers.data[counterLimit].email,
+                target: campaign!.target,
+            }
+           
+            await addToMailQueue(newMailContent, subscribers.data[counterLimit]._id, campaign!._id, hashCampaign, hashForUnsubcribe);
             
             counterLimit++;
         }
-
+       
         currentTotalSubscribers += DataTableEnum.LIMIT;
 
         if(counterLimit){
             subscribers = getSubscribers(currentTotalSubscribers);
         }
     }
- 
-    startQueue();
+
+    await startQueue();
 }
 
 
-const startQueue = () => {
+
+
+
+
+async function addToMailQueue(mailData: any, subscriberId: string, campaignId: string, hashCampaign: string, hashForUnsubcribe: string) {
+    return new Promise((resolve, reject) => {
+      mailQueue.add(mailData)
+        .then(job => {
+
+            CampaignSubscriberHashDB.insert({ subscriber_id: subscriberId, campaign_id: campaignId, hash: hashCampaign, ...TimesTamp() })
+
+            UnsubscriberHashDB.insert({ subscriber_id: subscriberId, hash: hashForUnsubcribe, ...TimesTamp() })
+
+            MailSendDB.insert({ subscriber_id: subscriberId,  campaign_id: campaignId,  ...TimesTamp() })
+
+            resolve(job);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
+
+
+
+
+
+const startQueue = async () => {
     mailQueue.process(async (job: any) => {
-        console.log(job.data);
         
         const data = job.data;
     
         await SendMail(data);
 
         await job.completed();
+    }).catch((e) => {
+        console.log(e);
     });
 }
 
 
 
 
-const SendMail = async (mailData: MailModel)=>{
+
+const SendMail = async (mailData: MailModel) => {
 
     const sender = Meteor.settings.private.SENDER;
-
-    Email.sendAsync({ to: mailData?.toEmail, from: sender, subject: mailData?.subject,  html: mailData.content}).catch(() => {
-        new Meteor.Error('Whoops!, There is an error');
-    }).then((e)=>console.log(e));
     
+    try {
+        await Email.sendAsync({ to: mailData?.toEmail, from: sender, subject: mailData?.subject,  html: mailData.content});
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
@@ -113,11 +165,12 @@ const MailPrepareForSubscription = (mailData: MailModel, hashCampaign: string, h
 
 
 
+
 // create a hash
 const CreateHash = () =>{
 
     let hash = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!*()_+~|}{[]\></-=';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!*()_+~|}{[]><-=';
     var charactersLength = characters.length;
     for ( var i = 0; i < 75; i++ ) {
         hash += characters.charAt(Math.floor(Math.random() * charactersLength));
