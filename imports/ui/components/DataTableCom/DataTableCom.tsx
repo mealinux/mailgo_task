@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Spinner } from "@chakra-ui/react";
 
 import DataTable from "react-data-table-component";
@@ -7,7 +7,6 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { TextEnum } from "../../constants/TextEnum";
 import { PaginationChangePage } from "react-data-table-component/dist/src/DataTable/types";
 import { DataTableEnum } from "../../constants/DataTableEnum";
-import SubscriberModel from "/imports/models/SubscriberModel";
 import { useModal } from "/imports/context/UtilContext";
 
 const customStyles = {

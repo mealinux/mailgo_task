@@ -7,5 +7,9 @@ export enum RoutesEnum {
   SUBSCRIBERS = "/subscribers",
 
   UNSUBSCRIBE = "/unsubscribe",
+  UNSUBSCRIBED_SUCCESS = "/unsubscribe-success",
+
   VERIFY = "/verify",
+
+  NOTFOUND = "/notfound",
 }

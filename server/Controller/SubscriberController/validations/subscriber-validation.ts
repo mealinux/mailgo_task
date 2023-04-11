@@ -11,6 +11,7 @@ export const subscriberValidationForAdd = (newSubscriberData: {
         _id: Match.Maybe(String),
         email:  String,
         name: String,
+        state: Number,
         last_name: Match.Maybe(String),
         createdAt: Match.Maybe(Date),
         updatedAt: Match.Maybe(Date),
@@ -18,7 +19,7 @@ export const subscriberValidationForAdd = (newSubscriberData: {
 
 
     if(! newSubscriberData.name || ! newSubscriberData.email){
-        throw new Meteor.Error('Oops!', 'First Name and Email can\'t be empty')
+        throw new Meteor.Error('function subscriberValidationForAdd => error', 'First Name and Email can\'t be empty')
     }
 }
 
@@ -31,6 +32,7 @@ export const subscriberValidationForUpdate = (newSubscriberData: {
         _id: Match.Maybe(String),
         email:  String,
         name: String,
+        state: Number,
         last_name: Match.Maybe(String),
         createdAt: Match.Maybe(Date),
         updatedAt: Match.Maybe(Date),
@@ -38,7 +40,7 @@ export const subscriberValidationForUpdate = (newSubscriberData: {
 
 
     if(! newSubscriberData.name || ! newSubscriberData.email){
-        throw new Meteor.Error('Oops!', 'First Name and Email can\'t be empty')
+        throw new Meteor.Error('function subscriberValidationForUpdate => error', 'First Name and Email can\'t be empty')
     }
 }
 
@@ -48,6 +50,7 @@ export const subscriberValidationForDelete = (subscriber: SubscriberModel) => {
         email:  Match.Maybe(String),
         name: Match.Maybe(String),
         last_name: Match.Maybe(String),
+        state: Match.Maybe(Number),
         createdAt: Match.Maybe(Date),
         updatedAt: Match.Maybe(Date),
     })

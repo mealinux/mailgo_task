@@ -1,16 +1,29 @@
 import { DataTableEnum } from "/imports/ui/constants/DataTableEnum";
 import { Filter } from "../helpers/Filters";
-import { CampaignsCollection } from "/imports/api/campaigns";
+import { CampaignCollection } from "/imports/api/campaigns";
 import CampaignModel from "/imports/models/CampaignModel";
+import { TimesTamp, TimesTampUpdatedAt } from '../helpers/TimesTamp'
 
 
-const db = CampaignsCollection;
 
 
-export const getCampaign = (id?: number) =>
+
+const db = CampaignCollection;
+
+
+
+
+
+
+export const getCampaign = (id: string) =>
 {
-    
+   return db.findOne({ _id: id });
 }
+
+
+
+
+
 
 export const getCampaigns = (offset: number, filters?: {dateRange : Array<Date>, text: string}) =>
 {    
@@ -24,13 +37,22 @@ export const getCampaigns = (offset: number, filters?: {dateRange : Array<Date>,
 }
 
 
+
+
+
+
 export const addCampaign = (campaign: CampaignModel) =>
 {
-    const newCampaignId = db.insert({...campaign, createdAt: new Date(), updatedAt: new Date()});
+    const newCampaignId = db.insert({...campaign, ...TimesTamp()});
 
     return newCampaignId;
-    
+
 }
+
+
+
+
+
 
 export const updateCampaign = (campaign: CampaignModel, newCampaignData: {
     name: string;
@@ -38,8 +60,14 @@ export const updateCampaign = (campaign: CampaignModel, newCampaignData: {
     target: string;
   }) =>
 {
-    db.update({ _id: campaign._id }, {...newCampaignData,  createdAt: campaign.createdAt, updatedAt: new Date()});
+    db.update({ _id: campaign._id }, { $set: {...newCampaignData,  createdAt: campaign.createdAt, ...TimesTampUpdatedAt()} });
 }
+
+
+
+
+
+
 
 export const deleteCampaign = (campaign: CampaignModel) =>
 {

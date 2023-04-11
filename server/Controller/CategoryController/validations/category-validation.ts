@@ -16,7 +16,7 @@ export const categoryValidationForAdd = (newCategoryData: {
 
 
     if(! newCategoryData.name){
-        throw new Meteor.Error('Oops!', 'Category Name can\'t be empty')
+        throw new Meteor.Error('function categoryValidationForAdd => error', 'Category Name can\'t be empty')
     }
 }
 
@@ -34,7 +34,7 @@ export const categoryValidationForUpdate = (newCategoryData: {
 
 
     if(! newCategoryData.name){
-        throw new Meteor.Error('Oops!', 'Category Name can\'t be empty')
+        throw new Meteor.Error('function categoryValidationForUpdate => error', 'Category Name can\'t be empty')
     }
 }
 

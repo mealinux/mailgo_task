@@ -59,9 +59,10 @@ const SubscribersView = (props: { title: string }) => {
   const handleChangeDataTable = (
     offset: number = 0,
     dateRange: Array<Date> = [],
-    text: string = ""
+    text: string = "",
+    state?: Array<number>
   ) => {
-    Meteor.callAsync("get-subscribers", offset, {
+    Meteor.callAsync("get-subscribers", offset, state, {
       dateRange,
       text,
     })

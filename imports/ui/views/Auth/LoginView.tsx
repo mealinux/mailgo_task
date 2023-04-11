@@ -18,25 +18,23 @@ import { RoutesEnum } from "../../constants/RoutesEnum";
 import { Link, useNavigate } from "react-router-dom";
 
 import { FaArrowCircleRight } from "react-icons/fa";
-import UtilContext from "/imports/context/UtilContext";
 import { Meteor } from "meteor/meteor";
+import { useModal } from "/imports/context/UtilContext";
 
 const LoginView = () => {
   const navigate = useNavigate();
-
-  const util = useContext(UtilContext);
+  const { progressBar, setProgressBar } = useModal();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const loginHandle = () => {
-    util?.setProgressBar(true);
+    setProgressBar(true);
 
     setTimeout(() => {
       Meteor.loginWithPassword({ email: email }, password, (error?: Error) => {
         if (error) {
-          util?.setProgressBar(false);
-          console.log(error.message);
+          setProgressBar(false);
         } else {
           navigate(RoutesEnum.DASHBOARD);
         }
@@ -45,7 +43,7 @@ const LoginView = () => {
   };
 
   useEffect(() => {
-    util?.setProgressBar(false);
+    setProgressBar(false);
   }, []);
 
   return (
@@ -107,7 +105,7 @@ const LoginView = () => {
                     Sign up
                   </Button>
                   <Button
-                    isLoading={util?.progressBar}
+                    isLoading={progressBar}
                     bg={ColorsEnum.MEDIUM_PURPLE}
                     size="md"
                     rightIcon={<FaArrowCircleRight />}

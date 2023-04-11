@@ -1,20 +1,31 @@
 import { Meteor } from "meteor/meteor";
 import CampaignModel from "/imports/models/CampaignModel";
 import { campaignValidationForAdd, campaignValidationForDelete, campaignValidationForUpdate } from "./validations/campaign-validation";
-import { addCampaign, deleteCampaign, getCampaigns, updateCampaign } from "/server/Repositories/CampaignRepository";
+import { addCampaign, deleteCampaign, getCampaign, getCampaigns, updateCampaign } from "/server/Repositories/CampaignRepository";
 import { getCategories } from "/server/Repositories/CategoryRepository";
-import { addCategoryCampaignRelation } from "./methods/CategoryCampaignRelation";
+import { AddCategoryCampaignRelation } from "./methods/CategoryCampaignRelation";
+import { SendMailForSubscription } from "/server/Mail/methods/SendMail";
 
 export class CampaignController
 {
     init() {
         Meteor.methods({
-            'add-campaign' (categoryId: string, campaign: CampaignModel, mailSend: boolean) {                
-                campaignValidationForAdd(campaign, categoryId);
+            'add-campaign' (categoryId: string, newCampaign: CampaignModel, mailSend: boolean) {                
+                campaignValidationForAdd(newCampaign, categoryId);
                
-                const campaignId = addCampaign(campaign);
+                const campaignId = addCampaign(newCampaign);
 
-                addCategoryCampaignRelation(categoryId, campaignId);
+                const campaign = getCampaign(campaignId);
+
+
+                const mailData = {
+                    subject: campaign!.name,
+                    content: campaign!.description,
+                }
+
+                SendMailForSubscription(mailData, campaign)
+
+                AddCategoryCampaignRelation(categoryId, campaignId);
             },
             'update-campaign' (categoryId: string, campaign: CampaignModel, newCampaignData: {
                 name: string;

@@ -1,4 +1,4 @@
-export const Filter = (filters?: {dateRange? : Array<Date>, text?: string}) => {
+export const Filter = (filters?: {dateRange? : Array<Date>, text?: string}, state?: Array<number>) => {
 
   let filterText = {};
   let filterDate = {};
@@ -10,11 +10,11 @@ export const Filter = (filters?: {dateRange? : Array<Date>, text?: string}) => {
 
 
   if(text?.length! > 2){
-    filterText = { $text: { $search: text } }
+    filterText = {field: { $in: state }, $text: { $search: text } }
   }
 
   if(filters?.dateRange?.length){
-    filterDate = { createdAt: { $gte: firstDate, $lte: endDate } };
+    filterDate = {field: { $in: state }, createdAt: { $gte: firstDate, $lte: endDate } };
   }
 
 
