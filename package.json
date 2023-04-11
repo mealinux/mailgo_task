@@ -16,6 +16,7 @@
     "@types/meteor-percolate-migrations": "^1.0.0",
     "@types/react-router-dom": "^5.3.3",
     "@wojtekmaj/react-daterange-picker": "^5.0.0",
+    "bull": "^4.10.4",
     "express": "^4.18.2",
     "framer-motion": "^10.10.0",
     "meteor-node-stubs": "^1.2.5",

@@ -26,7 +26,7 @@ const ModalView = (props: {
 }) => {
   return props.actionType != ActionEnum.DELETE ? (
     <ModalUtil
-      onClick={() =>
+      onClickAdd={() =>
         Actions({
           data: props,
           subscriber: props.selectedSubscriber,
@@ -78,7 +78,7 @@ const ModalView = (props: {
     </ModalUtil>
   ) : (
     <ModalUtil
-      onClick={() =>
+      onClickAdd={() =>
         Actions({
           subscriber: props.selectedSubscriber,
           data: props,

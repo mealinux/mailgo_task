@@ -12,16 +12,20 @@ import {
 import OutlineButtonCom from "../components/OutlineButtonCom";
 import { ColorsEnum } from "../constants/ColorsEnum";
 import { TextEnum } from "../constants/TextEnum";
+import { ActionEnum } from "../constants/ActionEnum";
+import { FaArrowAltCircleRight } from "react-icons/fa";
 
 const ModalUtil = (props: {
   children: ReactElement;
   isOpen: boolean;
   onOpen: VoidFunction;
   onClose: VoidFunction;
-  onClick: CallableFunction;
+  onClickAdd: CallableFunction;
+  onClickAddAndSend?: CallableFunction;
   title: string;
   icon: ReactElement;
   buttonText: string;
+  actionType?: ActionEnum;
 }) => {
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose}>
@@ -42,10 +46,21 @@ const ModalUtil = (props: {
           <OutlineButtonCom
             text={props.buttonText}
             icon={props.icon}
-            onClick={() => props.onClick()}
+            onClick={() => props.onClickAdd()}
             customClickColor={ColorsEnum.LIGHTEST_PURPLE}
             customContentColor={ColorsEnum.DARKEST_PURPLE}
           />
+          {props.actionType == ActionEnum.ADD ? (
+            <OutlineButtonCom
+              text="ADD AND SEND"
+              icon={<FaArrowAltCircleRight />}
+              onClick={() => props.onClickAddAndSend!()}
+              customClickColor={ColorsEnum.LIGHTEST_PURPLE}
+              customContentColor={ColorsEnum.DARKEST_PURPLE}
+            />
+          ) : (
+            <></>
+          )}
         </ModalFooter>
       </ModalContent>
     </Modal>

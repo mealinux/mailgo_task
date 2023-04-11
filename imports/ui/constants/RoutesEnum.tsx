@@ -5,4 +5,7 @@ export enum RoutesEnum {
   CATEGORY = "/category",
   CAMPAIGN = "/campaign",
   SUBSCRIBERS = "/subscribers",
+
+  UNSUBSCRIBE = "/unsubscribe",
+  VERIFY = "/verify",
 }

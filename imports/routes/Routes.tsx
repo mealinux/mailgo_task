@@ -7,12 +7,19 @@ import DashboardView from "../ui/views/DashboardView";
 import CategoriesView from "../ui/views/Category/CategoriesView";
 import CampaignsView from "../ui/views/Campaign/CampaignsView";
 import SubscribersView from "../ui/views/Subscriber/SubscribersView";
+import { CampaignCallback } from "../ui/Verifying/CampaignVerify";
 
 export const RenderRoutes = () => (
   <BrowserRouter>
     <Routes>
       <Route path={RoutesEnum.LOGIN} element={<LoginView />}></Route>
       <Route path={RoutesEnum.REGISTER} element={<RegisterView />}></Route>
+
+      <Route path={RoutesEnum.UNSUBSCRIBE + "/:hash"}></Route>
+      <Route
+        path={RoutesEnum.VERIFY + "/:hash"}
+        Component={CampaignCallback}
+      ></Route>
       <Route
         path={RoutesEnum.DASHBOARD}
         element={<DashboardView title={"Dashboard"} />}

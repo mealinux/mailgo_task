@@ -24,14 +24,16 @@ export class SubscriberController
             },
             'delete-subscriber' (subscriber: SubscriberModel) {
                 subscriberValidationForDelete(subscriber);
-                    console.log(subscriber);
-                    
+
                 deleteSubscriber(subscriber);
             },
-            'get-subscribers'  (offset: number, filters?:{dateRange: Array<Date>, text: string}) {
-                    
+            'get-subscribers'  (offset?: number, filters?:{dateRange?: Array<Date>, text?: string}) {
+                
                 return getSubscribers(offset, filters);
             }
         })
     }
+
+
+
 }

@@ -1,4 +1,4 @@
-export const Filter = (filters?: {dateRange : Array<Date>, text: string}) => {
+export const Filter = (filters?: {dateRange? : Array<Date>, text?: string}) => {
 
   let filterText = {};
   let filterDate = {};
@@ -13,9 +13,7 @@ export const Filter = (filters?: {dateRange : Array<Date>, text: string}) => {
     filterText = { $text: { $search: text } }
   }
 
-  if(filters?.dateRange.length){
-    console.log(filters?.dateRange);
-    
+  if(filters?.dateRange?.length){
     filterDate = { createdAt: { $gte: firstDate, $lte: endDate } };
   }
 
