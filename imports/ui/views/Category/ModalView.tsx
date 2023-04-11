@@ -5,7 +5,8 @@ import { ColorsEnum } from "../../constants/ColorsEnum";
 import ModalUtil from "../../utils/ModalUtil";
 import { ActionEnum } from "../../constants/ActionEnum";
 import { Actions } from "./Actions";
-import SubscriberModel from "/imports/models/SubscriberModel";
+
+import CategoryModel from "/imports/models/CategoryModel";
 
 const ModalView = (props: {
   isOpen: boolean;
@@ -14,26 +15,23 @@ const ModalView = (props: {
   handleChangeDataTable: VoidFunction;
   actionType: ActionEnum;
   name: string;
-  last_name: string;
-  email: string;
+  description: string;
   modalTitle: string;
   modalButtonText: string;
   modalIcon: ReactElement;
   setName: Dispatch<SetStateAction<string>>;
-  setLastName: Dispatch<SetStateAction<string>>;
-  setEmail: Dispatch<SetStateAction<string>>;
-  selectedSubscriber: SubscriberModel;
+  setDescription: Dispatch<SetStateAction<string>>;
+  selectedCategory: CategoryModel;
 }) => {
   return props.actionType != ActionEnum.DELETE ? (
     <ModalUtil
       onClickAdd={() =>
         Actions({
           data: props,
-          subscriber: props.selectedSubscriber,
-          newSubscriberData: {
+          category: props.selectedCategory,
+          newCategoryData: {
             name: props.name,
-            last_name: props.last_name,
-            email: props.email,
+            description: props.description,
           },
         })
       }
@@ -47,7 +45,7 @@ const ModalView = (props: {
       <Flex flexDirection={"column"}>
         <Input
           value={props.name}
-          placeholder="First Name"
+          placeholder="Category Name"
           size="md"
           htmlSize={30}
           mb={4}
@@ -56,23 +54,14 @@ const ModalView = (props: {
           onChange={(event) => props.setName(event.target.value)}
         />
         <Input
-          value={props.last_name}
-          placeholder="Last Name"
+          value={props.description}
+          placeholder="Description"
           size="md"
           htmlSize={30}
           mb={4}
           width={"auto"}
           bg={ColorsEnum.WHITE}
-          onChange={(event) => props.setLastName(event.target.value)}
-        />
-        <Input
-          value={props.email}
-          placeholder="E-Mail"
-          size="md"
-          htmlSize={30}
-          width={"auto"}
-          bg={ColorsEnum.WHITE}
-          onChange={(event) => props.setEmail(event.target.value)}
+          onChange={(event) => props.setDescription(event.target.value)}
         />
       </Flex>
     </ModalUtil>
@@ -80,7 +69,7 @@ const ModalView = (props: {
     <ModalUtil
       onClickAdd={() =>
         Actions({
-          subscriber: props.selectedSubscriber,
+          category: props.selectedCategory,
           data: props,
         })
       }
@@ -93,11 +82,11 @@ const ModalView = (props: {
     >
       <Flex flexDirection={"column"}>
         <Text color={ColorsEnum.BLUE}>
-          {props.selectedSubscriber.name +
+          {props.selectedCategory.name +
             " " +
-            props.selectedSubscriber.last_name}
+            props.selectedCategory.description}
         </Text>
-        <Text>named user will delete, Are you sure?</Text>
+        <Text>named category will delete, Are you sure?</Text>
       </Flex>
     </ModalUtil>
   );

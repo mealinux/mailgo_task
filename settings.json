@@ -1,0 +1,8 @@
+{
+    "private": {
+      "REDIS_URL": "redis://127.0.0.1:6379",
+      "BASE_URL": "http://127.0.0.1:3000",
+      "MAIL_URL": "smtp://8a257b05887f37:0fbb5c48982784@sandbox.smtp.mailtrap.io:587",
+      "SENDER": "sender@mail.com"
+    }
+  }

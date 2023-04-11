@@ -1,21 +1,21 @@
 import SubscriberModel from "/imports/models/SubscriberModel";
 import { DataTableEnum } from "/imports/ui/constants/DataTableEnum";
 import { SubscribersCollection } from "/imports/api/subscribers";
-import { Filter } from "../Controller/SubscriberController/methods/Filters";
+import { Filter } from "../helpers/Filters";
 
 
 const db = SubscribersCollection;
 
 
-export const getSubscriber = (id?: number) =>
+export const getSubscriber = (subscriberId: string) =>
 {
-    
+    return db.findOne({ _id: subscriberId });
 }
 
-export const getSubscribers = (offset: number, filters?: {dateRange : Array<Date>, text: string}) =>
+export const getSubscribers = (offset: number = 0, filters?: {dateRange? : Array<Date>, text?: string}) =>
 {    
     const filteredData = Filter(filters);
-    
+
     const data = db.find(filteredData, {skip: offset, limit: DataTableEnum.LIMIT, sort: ['createdAt', 'desc']}).fetch();
         
     const totalCount = db.find(filteredData).count();
@@ -40,5 +40,5 @@ export const updateSubscriber = (subscriber: SubscriberModel, newSubscriberData:
 
 export const deleteSubscriber = (subscriber: SubscriberModel) =>
 {
-    db.remove({ _id: subscriber._id });
+    db.remove({ _id: subscriber._id });    
 }

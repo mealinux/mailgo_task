@@ -1,5 +1,15 @@
 module.exports = {
   async up(db, client) {
+    await db.collection('campaigns').createIndexes([
+      {
+        key: {
+          name: "text",
+          description: "text",
+          target: "text"
+        },
+      }
+    ]);
+
     await db.collection('campaigns').updateMany(
       {},
       {
@@ -12,6 +22,16 @@ module.exports = {
   },
 
   async down(db) {
+    await db.collection('campaigns').dropIndexes([
+      {
+        key: {
+          name: "text",
+          description: "text",
+          target: "text"
+        },
+      }
+    ]);
+    
     await db.collection('campaigns').updateMany(
       {},
       {

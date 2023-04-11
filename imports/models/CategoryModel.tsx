@@ -1,7 +1,7 @@
-export default interface CampaignModel {
-  _id: object;
+export default interface CategoryModel {
+  _id?: string;
   name: string;
   description: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
