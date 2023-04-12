@@ -2,21 +2,28 @@ export const Filter = (filters?: {dateRange? : Array<Date>, text?: string}, stat
 
   let filterText = {};
   let filterDate = {};
+  let fieldState = {};
 
   const firstDate = filters?.dateRange?.[0];
   const endDate = filters?.dateRange?.[1];
 
   const text = filters?.text;
 
+  if(state){
+    fieldState = { state: { $in: state }} ;
+  }
 
   if(text?.length! > 2){
-    filterText = {field: { $in: state }, $text: { $search: text } }
+    filterText = {$text: { $search: text } }
   }
 
   if(filters?.dateRange?.length){
-    filterDate = {field: { $in: state }, createdAt: { $gte: firstDate, $lte: endDate } };
+    filterDate = {...fieldState, createdAt: { $gte: firstDate, $lte: endDate } };
   }
 
-
+  if(!filters?.dateRange?.length && state){
+    filterDate = {...fieldState};
+  }
+  
   return Object.keys(filterText).length > 0 ? filterText : filterDate;
 }
