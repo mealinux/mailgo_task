@@ -52,7 +52,7 @@ export const SendInfoMail = (mailData: MailModel,  subscriberId?: string)=>{
 
 export const SendMailForSubscription = async (mailData: MailModel, selectedCampaign: any) => {
     
-    let subscribers = getSubscribers();
+    let subscribers = getSubscribers(0, [1]);
 
     const campaign =  CampaignDB.findOne({ _id: selectedCampaign._id});
     
@@ -83,7 +83,7 @@ export const SendMailForSubscription = async (mailData: MailModel, selectedCampa
         currentTotalSubscribers += DataTableEnum.LIMIT;
 
         if(counterLimit){
-            subscribers = getSubscribers(currentTotalSubscribers);
+            subscribers = getSubscribers(currentTotalSubscribers, [1]);
         }
     }
 

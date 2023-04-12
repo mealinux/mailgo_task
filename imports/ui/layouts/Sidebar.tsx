@@ -27,6 +27,7 @@ const Sidebar = () => {
           <Button
             isActive={RoutesEnum.DASHBOARD === window.location.pathname}
             textColor={ColorsEnum.GREY}
+            bg={ColorsEnum.WHITE}
             _hover={{
               textColor: ColorsEnum.DARKEST_PURPLE,
             }}
@@ -53,6 +54,7 @@ const Sidebar = () => {
           <Button
             isActive={RoutesEnum.SUBSCRIBERS === window.location.pathname}
             textColor={ColorsEnum.GREY}
+            bg={ColorsEnum.WHITE}
             _hover={{
               textColor: ColorsEnum.DARKEST_PURPLE,
             }}
@@ -79,6 +81,7 @@ const Sidebar = () => {
           <Button
             isActive={RoutesEnum.CATEGORY === window.location.pathname}
             textColor={ColorsEnum.GREY}
+            bg={ColorsEnum.WHITE}
             _hover={{
               textColor: ColorsEnum.DARKEST_PURPLE,
             }}
@@ -105,6 +108,7 @@ const Sidebar = () => {
           <Button
             isActive={RoutesEnum.CAMPAIGN === window.location.pathname}
             textColor={ColorsEnum.GREY}
+            bg={ColorsEnum.WHITE}
             _hover={{
               textColor: ColorsEnum.DARKEST_PURPLE,
             }}

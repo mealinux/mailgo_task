@@ -14,7 +14,7 @@ export const Filter = (filters?: {dateRange? : Array<Date>, text?: string}, stat
   }
 
   if(text?.length! > 2){
-    filterText = {$text: { $search: text } }
+    filterText = { $text: { $search: text } }
   }
 
   if(filters?.dateRange?.length){

@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import SubscriberModel from "/imports/models/SubscriberModel";
-import { addSubscriber, deleteSubscriber, getSubscribers, updateSubscriber } from "/server/Repositories/SubscriberRepository";
+import { addSubscriber, deleteSubscriber, getCampaignClickCountOfSubscriber, getCategoriesOfSubscriber, getMailCountOfSubscriber, getSubscribers, updateSubscriber } from "/server/Repositories/SubscriberRepository";
 import { subscriberValidationForAdd, subscriberValidationForDelete, subscriberValidationForUpdate } from "./validations/subscriber-validation";
 
 export class SubscriberController
@@ -14,6 +14,9 @@ export class SubscriberController
                
                 addSubscriber(subscriber);
             },
+
+
+
             'update-subscriber' (subscriber: SubscriberModel, newSubscriberData: {
                 name: string;
                 last_name: string;
@@ -24,14 +27,34 @@ export class SubscriberController
                
                 updateSubscriber(subscriber, newSubscriberData);
             },
-            'delete-subscriber' (subscriber: SubscriberModel) {
-                subscriberValidationForDelete(subscriber);
 
-                deleteSubscriber(subscriber);
+
+
+            'delete-subscriber' (subscriberId: string) {
+                subscriberValidationForDelete(subscriberId);
+
+                deleteSubscriber(subscriberId);
             },
+
+
+
             'get-subscribers'  (offset?: number, state?: Array<number>, filters?:{dateRange?: Array<Date>, text?: string}) {
                 
                 return getSubscribers(offset, state, filters);
+            },
+
+
+
+            async 'get-subscriber-detail'  (subscriberId: string) {
+                console.log(subscriberId);
+                
+                const campaignClickNumberOfSubscriber = await getCampaignClickCountOfSubscriber(subscriberId);
+                const mailNumberOfSubscriber = await getMailCountOfSubscriber(subscriberId);
+                const categoriesOfSubscriber = await getCategoriesOfSubscriber(subscriberId);
+
+
+
+                return { campaignClickNumberOfSubscriber, mailNumberOfSubscriber, categoriesOfSubscriber };
             }
         })
     }

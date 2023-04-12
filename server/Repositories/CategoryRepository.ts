@@ -29,7 +29,7 @@ export const getCategory = (id?: number) =>
 export const getCategories = (offset: number = 0, filters?: {dateRange? : Array<Date>, text?: string, limit?: boolean}) =>
 {    
     const filteredData = Filter(filters);
-
+    
     const filterlimit = filters?.limit ? { limit:  DataTableEnum.LIMIT} : {};
     
     const data = db.find(filteredData, {skip: offset, filterlimit, sort: ['createdAt', 'desc']}).fetch();

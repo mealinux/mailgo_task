@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useReducer } from "react";
+import React, { ReactElement } from "react";
 import {
   Modal,
   ModalBody,
@@ -18,9 +18,8 @@ import { FaArrowAltCircleRight } from "react-icons/fa";
 const ModalUtil = (props: {
   children: ReactElement;
   isOpen: boolean;
-  onOpen: VoidFunction;
   onClose: VoidFunction;
-  onClickAdd: CallableFunction;
+  onClickAdd?: CallableFunction;
   onClickAddAndSend?: CallableFunction;
   title: string;
   icon: ReactElement;
@@ -43,13 +42,18 @@ const ModalUtil = (props: {
             customContentColor={ColorsEnum.GREY}
             onClick={props.onClose}
           />
-          <OutlineButtonCom
-            text={props.buttonText}
-            icon={props.icon}
-            onClick={() => props.onClickAdd()}
-            customClickColor={ColorsEnum.LIGHTEST_PURPLE}
-            customContentColor={ColorsEnum.DARKEST_PURPLE}
-          />
+          {props.actionType != ActionEnum.DETAIL ? (
+            <OutlineButtonCom
+              text={props.buttonText}
+              icon={props.icon}
+              onClick={() => props.onClickAdd!()}
+              customClickColor={ColorsEnum.LIGHTEST_PURPLE}
+              customContentColor={ColorsEnum.DARKEST_PURPLE}
+            />
+          ) : (
+            <></>
+          )}
+
           {props.actionType == ActionEnum.ADD ? (
             <OutlineButtonCom
               text="ADD AND SEND"

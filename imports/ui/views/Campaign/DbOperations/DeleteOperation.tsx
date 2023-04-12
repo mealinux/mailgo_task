@@ -7,16 +7,12 @@ export const DeleteOperation = (props: {
   handleChangeDataTable: VoidFunction;
   campaign: CampaignModel;
 }) => {
-  Meteor.call(
-    "delete-campaign",
-    props.campaign,
-    (err: Meteor.Error, res: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        props.handleChangeDataTable();
-        props.onClose();
-      }
-    }
-  );
+  Meteor.callAsync("delete-campaign", props.campaign)
+    .then((res: any) => {
+      props.handleChangeDataTable();
+      props.onClose();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

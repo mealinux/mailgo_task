@@ -4,7 +4,7 @@ import { ColorsEnum } from "../../constants/ColorsEnum";
 
 import ModalUtil from "../../utils/ModalUtil";
 import { ActionEnum } from "../../constants/ActionEnum";
-import { Actions } from "./Actions";
+import { DbActions } from "./DbActions";
 
 import CategoryModel from "/imports/models/CategoryModel";
 
@@ -26,7 +26,7 @@ const ModalView = (props: {
   return props.actionType != ActionEnum.DELETE ? (
     <ModalUtil
       onClickAdd={() =>
-        Actions({
+        DbActions({
           data: props,
           category: props.selectedCategory,
           newCategoryData: {
@@ -37,7 +37,6 @@ const ModalView = (props: {
       }
       isOpen={props.isOpen}
       onClose={() => props.onClose()}
-      onOpen={props.onOpen}
       title={props.modalTitle}
       buttonText={props.modalButtonText}
       icon={props.modalIcon}
@@ -68,14 +67,13 @@ const ModalView = (props: {
   ) : (
     <ModalUtil
       onClickAdd={() =>
-        Actions({
+        DbActions({
           category: props.selectedCategory,
           data: props,
         })
       }
       isOpen={props.isOpen}
       onClose={() => props.onClose()}
-      onOpen={props.onOpen}
       title={props.modalTitle}
       buttonText={props.modalButtonText}
       icon={props.modalIcon}

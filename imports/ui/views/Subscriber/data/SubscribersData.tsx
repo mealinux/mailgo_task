@@ -6,11 +6,14 @@ import EditButtonCom from "/imports/ui/components/DataTableCom/Buttons/EditButto
 import SubscriberModel from "/imports/models/SubscriberModel";
 import { FaTrash, FaUndoAlt } from "react-icons/fa";
 import { ActionEnum } from "/imports/ui/constants/ActionEnum";
+import { DetailButtonCom } from "/imports/ui/components/DataTableCom/Buttons/DetailButtonCom";
+import { getSubscriberDetail } from "../Modals/DetailModalView";
 
 export const SubscribersData = (props: {
   data: Array<SubscriberModel>;
   totalCount: number;
-  onOpen: VoidFunction;
+  modalOnOpen: VoidFunction;
+  modalDetailOnOpen: VoidFunction;
   handleChangeDataTable?: CallableFunction;
   setModalTitle: Dispatch<SetStateAction<string>>;
   setModalButtonText: Dispatch<SetStateAction<string>>;
@@ -20,6 +23,8 @@ export const SubscribersData = (props: {
   setEmail: Dispatch<SetStateAction<string>>;
   setActionType: Dispatch<SetStateAction<ActionEnum>>;
   setSelectedSubscriber: Dispatch<SetStateAction<SubscriberModel>>;
+  setSubscriberDetail: Dispatch<SetStateAction<any>>;
+  setProgressBarForDetailModal: Dispatch<SetStateAction<boolean>>;
 }) => {
   let dataSubscribers: any = [];
 
@@ -42,7 +47,7 @@ export const SubscribersData = (props: {
 
               props.setSelectedSubscriber(subscribe);
 
-              props.onOpen();
+              props.modalOnOpen();
             }}
           />
           <DeleteButtonCom
@@ -59,7 +64,25 @@ export const SubscribersData = (props: {
 
               props.setSelectedSubscriber(subscribe);
 
-              props.onOpen();
+              props.modalOnOpen();
+            }}
+          />
+          <DetailButtonCom
+            onClick={async () => {
+              props.setActionType(ActionEnum.DETAIL);
+
+              props.setModalTitle(`${subscribe.name}, Detail`);
+
+              props.setSelectedSubscriber(subscribe);
+
+              await getSubscriberDetail({
+                subscriberId: subscribe._id!,
+                setProgressBarForDetailModal:
+                  props.setProgressBarForDetailModal,
+                setSubscriberDetail: props.setSubscriberDetail,
+              });
+
+              props.modalDetailOnOpen();
             }}
           />
         </Flex>

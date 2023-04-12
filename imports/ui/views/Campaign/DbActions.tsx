@@ -5,7 +5,7 @@ import { DeleteOperation } from "./DbOperations/DeleteOperation";
 import { UpdateOperation } from "./DbOperations/UpdateOperation";
 import CampaignModel from "/imports/models/CampaignModel";
 
-export const Actions = (props: {
+export const DbActions = (props: {
   actionData: {
     data: {
       isOpen: boolean;

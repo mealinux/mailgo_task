@@ -8,7 +8,7 @@ export const DeleteOperation = (props: {
 }) => {
   Meteor.call(
     "delete-subscriber",
-    props.subscriber,
+    props.subscriber._id,
     (err: Meteor.Error, res: any) => {
       if (err) {
         console.log(err);

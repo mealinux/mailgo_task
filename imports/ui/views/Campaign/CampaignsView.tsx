@@ -19,11 +19,11 @@ import { Meteor } from "meteor/meteor";
 import { DataTableEnum } from "../../constants/DataTableEnum";
 import { DataColumns } from "./data/DataColumns";
 import { ActionEnum } from "../../constants/ActionEnum";
-import ModalView from "./ModalView";
 import { useModal } from "/imports/context/UtilContext";
 import { CampaignsData } from "./data/CampaignsData";
 import CampaignModel from "/imports/models/CampaignModel";
 import CategoryModel from "/imports/models/CategoryModel";
+import ModalView from "./ModalView";
 
 const CampaignsView = (props: { title: string }) => {
   const { setProgressBar } = useModal();
@@ -34,6 +34,8 @@ const CampaignsView = (props: { title: string }) => {
   const [selectedCampaign, setSelectedCampaign] = useState<CampaignModel>(
     {} as CampaignModel
   );
+
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
 
   const [modalTitle, setModalTitle] = useState("");
   const [modalButtonText, setModalButtonText] = useState("");
@@ -63,15 +65,20 @@ const CampaignsView = (props: { title: string }) => {
 
   useEffect(() => {
     setProgressBar(false);
-    handleChangeDataTable();
+
+    const getCampaigns = async () => {
+      await handleChangeDataTable();
+    };
+
+    getCampaigns();
   }, []);
 
-  const handleChangeDataTable = (
+  const handleChangeDataTable = async (
     offset: number = 0,
     dateRange: Array<Date> = [],
     text: string = ""
   ) => {
-    Meteor.callAsync("get-campaigns", offset, {
+    await Meteor.callAsync("get-campaigns", offset, {
       dateRange,
       text,
     })
@@ -93,7 +100,9 @@ const CampaignsView = (props: { title: string }) => {
             setTarget,
             setActionType,
             setSelectedCampaign,
+            setSelectedCategoryId,
           });
+          console.log(data.campaigns.data);
 
           setCategories(data.categories.data);
           setCampaignData(dataAll);
@@ -124,6 +133,8 @@ const CampaignsView = (props: { title: string }) => {
         setTarget={setTarget}
         selectedCampaign={selectedCampaign}
         categories={categories}
+        selectedCategoryId={selectedCategoryId}
+        setSelectedCategoryId={setSelectedCategoryId}
       />
       <Flex flexDirection={"column"} padding={10}>
         <Flex justifyContent={"space-between"} alignItems={"center"} mb={10}>
@@ -155,18 +166,18 @@ const CampaignsView = (props: { title: string }) => {
               width={"auto"}
               bg={ColorsEnum.WHITE}
               borderColor={ColorsEnum.LIGHT_GREY}
-              onChange={(event) => {
+              onChange={async (event) => {
                 if (event.target.value.length > 2) {
                   setFilterText(event.target.value);
                   setShowFilter(false);
-                  handleChangeDataTable(
+                  await handleChangeDataTable(
                     dataOffset,
                     filterDateRange,
                     event.target.value
                   );
                 } else {
                   setFilterText("");
-                  handleChangeDataTable();
+                  await handleChangeDataTable();
                 }
               }}
             />
@@ -177,10 +188,10 @@ const CampaignsView = (props: { title: string }) => {
               customContentColor={
                 showFilter ? ColorsEnum.BLACK : ColorsEnum.GREY
               }
-              onClick={() => {
+              onClick={async () => {
                 if (showFilter) {
                   setShowFilter(false);
-                  handleChangeDataTable();
+                  await handleChangeDataTable();
                   setFilterDateRange([]);
                 } else {
                   setShowFilter(true);
@@ -213,12 +224,12 @@ const CampaignsView = (props: { title: string }) => {
             data={campaignData.campaigns}
             totalCount={campaignData.totalCount}
             columns={DataColumns()}
-            onChangePage={(page, totalRows) => {
+            onChangePage={async (page, totalRows) => {
               const offset = (page - 1) * DataTableEnum.LIMIT;
 
               setDataOffset(offset);
 
-              handleChangeDataTable(offset, filterDateRange, filterText);
+              await handleChangeDataTable(offset, filterDateRange, filterText);
             }}
           />
         ) : (

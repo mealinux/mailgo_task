@@ -12,9 +12,9 @@ export class MailController {
     mailOperations = () => {
 
         Meteor.methods({
-            'send-subscription-mail' (maildata: MailModel, selectedCampaign: CampaignModel){
+            async 'send-subscription-mail' (maildata: MailModel, selectedCampaign: CampaignModel){
                 
-                SendMailForSubscription(maildata, selectedCampaign)
+                await SendMailForSubscription(maildata, selectedCampaign)
             },
             'send-info-mail' (maildata: MailModel, subscriberId: string){
                 

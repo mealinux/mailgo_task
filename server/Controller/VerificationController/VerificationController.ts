@@ -14,6 +14,9 @@ export class VerificationController
             }
         });
 
+
+        
+
         Meteor.methods({
             'unsubscribe-verification' (hash: string) {
                 
@@ -23,6 +26,8 @@ export class VerificationController
             }
         });
         
+
+
         
         Meteor.methods({
             'unsubscribed-success'  (hash: string) {

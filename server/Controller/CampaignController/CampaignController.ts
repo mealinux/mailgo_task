@@ -27,6 +27,10 @@ export class CampaignController
 
                 AddCategoryCampaignRelation(categoryId, campaignId);
             },
+
+
+
+            
             'update-campaign' (categoryId: string, campaign: CampaignModel, newCampaignData: {
                 name: string;
                 description?: string;
@@ -34,16 +38,24 @@ export class CampaignController
               }) {
                 campaignValidationForUpdate(newCampaignData, categoryId);
                
-                updateCampaign(campaign, newCampaignData);
+                updateCampaign(categoryId, campaign, newCampaignData);
             },
+
+
+
+
             'delete-campaign' (campaign: CampaignModel) {
                 campaignValidationForDelete(campaign);
                     
                 deleteCampaign(campaign);
             },
-            'get-campaigns'  (offset: number, filters?:{dateRange: Array<Date>, text: string}) {
+
+
+
+
+            async 'get-campaigns'   (offset: number, filters?:{dateRange: Array<Date>, text: string}) {
                     
-                const campaigns = getCampaigns(offset, filters);
+                const campaigns = await getCampaigns(offset, filters);
                 const categories = getCategories();
 
                 return {campaigns, categories};
