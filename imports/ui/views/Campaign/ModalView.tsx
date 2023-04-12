@@ -4,7 +4,7 @@ import { ColorsEnum } from "../../constants/ColorsEnum";
 
 import ModalUtil from "../../utils/ModalUtil";
 import { ActionEnum } from "../../constants/ActionEnum";
-import { Actions } from "./Actions";
+import { DbActions } from "./DbActions";
 
 import CampaignModel from "/imports/models/CampaignModel";
 import CategoryModel from "/imports/models/CategoryModel";
@@ -27,9 +27,9 @@ const ModalView = (props: {
   setTarget: Dispatch<SetStateAction<string>>;
   selectedCampaign: CampaignModel;
   categories: Array<CategoryModel>;
+  setSelectedCategoryId: Dispatch<SetStateAction<string>>;
+  selectedCategoryId: string;
 }) => {
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
-
   const actionData = {
     data: props,
     campaign: props.selectedCampaign,
@@ -38,29 +38,17 @@ const ModalView = (props: {
       description: props.description,
       target: props.target,
     },
-    selectedCategoryId,
+    selectedCategoryId: props.selectedCategoryId,
   };
 
   return props.actionType != ActionEnum.DELETE ? (
     <ModalUtil
-      onClickAdd={() => Actions({ actionData })}
+      onClickAdd={() => DbActions({ actionData })}
       onClickAddAndSend={() => {
-        Actions({ actionData: actionData, mailSend: true });
-
-        /* const mailData: MailModel = {
-          subject: props.name,
-          content: props.description,
-          target: props.target,
-        };
-
-        SendSubscriptionMail({
-          mailData,
-          selectedCampaign: props.selectedCampaign,
-        }); */
+        DbActions({ actionData: actionData, mailSend: true });
       }}
       isOpen={props.isOpen}
       onClose={() => props.onClose()}
-      onOpen={props.onOpen}
       title={props.modalTitle}
       buttonText={props.modalButtonText}
       icon={props.modalIcon}
@@ -99,7 +87,8 @@ const ModalView = (props: {
         {props.categories ? (
           <Categories
             categories={props.categories}
-            setSelectedCategoryId={setSelectedCategoryId}
+            campaign={props.selectedCampaign}
+            setSelectedCategoryId={props.setSelectedCategoryId}
           />
         ) : (
           <></>
@@ -109,7 +98,7 @@ const ModalView = (props: {
   ) : (
     <ModalUtil
       onClickAdd={() =>
-        Actions({
+        DbActions({
           actionData: {
             campaign: props.selectedCampaign,
             data: props,
@@ -118,7 +107,6 @@ const ModalView = (props: {
       }
       isOpen={props.isOpen}
       onClose={() => props.onClose()}
-      onOpen={props.onOpen}
       title={props.modalTitle}
       buttonText={props.modalButtonText}
       icon={props.modalIcon}

@@ -132,7 +132,7 @@ const DashboardView = (props: { title: string }) => {
                 <FaTable style={{ color: ColorsEnum.RED }} />
 
                 <Stat>
-                  <StatLabel>Total Click Campaign</StatLabel>
+                  <StatLabel>Total Clicked Campaign</StatLabel>
                   <StatNumber>{totalClickedCampaign.toString()}</StatNumber>
                 </Stat>
               </Flex>

@@ -10,17 +10,24 @@ export const AddOperation = (props: {
   handleChangeDataTable: VoidFunction;
   selectedCategoryId: string;
 }) => {
-  Meteor.call(
+  /* Meteor.call("send-subscription-mail", (err: Meteor.Error, res: any) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(res);
+    }
+  }); */
+
+  Meteor.callAsync(
     "add-campaign",
     props.selectedCategoryId,
-    props.newCampaignData,
-    (err: Meteor.Error, res: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        props.handleChangeDataTable();
-        props.onClose();
-      }
-    }
-  );
+    props.newCampaignData
+  )
+    .then((res: any) => {
+      props.handleChangeDataTable();
+      props.onClose();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

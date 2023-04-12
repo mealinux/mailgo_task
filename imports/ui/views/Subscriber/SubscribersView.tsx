@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import Main from "../../Main";
 import { Center, Flex, Input, Spinner, useDisclosure } from "@chakra-ui/react";
 import DataTableCom from "../../components/DataTableCom/DataTableCom";
@@ -14,19 +14,34 @@ import { SubscribersData } from "./data/SubscribersData";
 import { DataColumns } from "./data/DataColumns";
 import { ActionEnum } from "../../constants/ActionEnum";
 import SubscriberModel from "/imports/models/SubscriberModel";
-import ModalView from "./ModalView";
+import ModalView from "./Modals/ModalView";
 import { useModal } from "/imports/context/UtilContext";
-import { Tracker } from "meteor/tracker";
+import DetailModalView from "./Modals/DetailModalView";
 
 const SubscribersView = (props: { title: string }) => {
   const { setProgressBar } = useModal();
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [progressBarForDetailModal, setProgressBarForDetailModal] =
+    useState(false);
+
+  const {
+    isOpen: modalIsOpen,
+    onOpen: modalOnOpen,
+    onClose: modalOnClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: modalDetailIsOpen,
+    onOpen: modalDetailOnOpen,
+    onClose: modalDetailOnClose,
+  } = useDisclosure();
 
   //for modal
   const [selectedSubscriber, setSelectedSubscriber] = useState<SubscriberModel>(
     {} as SubscriberModel
   );
+
+  const [subscriberDetail, setSubscriberDetail] = useState<any>();
 
   const [modalTitle, setModalTitle] = useState("");
   const [modalButtonText, setModalButtonText] = useState("");
@@ -71,7 +86,8 @@ const SubscribersView = (props: { title: string }) => {
         const dataAll = SubscribersData({
           data: data.data,
           totalCount: data.totalCount,
-          onOpen,
+          modalOnOpen,
+          modalDetailOnOpen,
           handleChangeDataTable,
           setModalTitle,
           setModalButtonText,
@@ -81,6 +97,8 @@ const SubscribersView = (props: { title: string }) => {
           setEmail,
           setActionType,
           setSelectedSubscriber,
+          setSubscriberDetail,
+          setProgressBarForDetailModal,
         });
 
         setSubscribeData(dataAll);
@@ -93,10 +111,23 @@ const SubscribersView = (props: { title: string }) => {
 
   return (
     <Main style={{ width: "80%" }} title={props.title}>
+      <DetailModalView
+        isOpen={modalDetailIsOpen}
+        onOpen={modalDetailOnOpen}
+        onClose={modalDetailOnClose}
+        handleChangeDataTable={handleChangeDataTable}
+        modalTitle={modalTitle}
+        modalButtonText={modalButtonText}
+        modalIcon={modalIcon}
+        actionType={actionType}
+        selectedSubscriber={selectedSubscriber}
+        subscriberDetail={subscriberDetail}
+        progressBarForDetailModal={progressBarForDetailModal}
+      />
       <ModalView
-        isOpen={isOpen}
-        onClose={onClose}
-        onOpen={onOpen}
+        isOpen={modalIsOpen}
+        onClose={modalOnClose}
+        onOpen={modalOnOpen}
         handleChangeDataTable={handleChangeDataTable}
         actionType={actionType}
         name={name}
@@ -190,7 +221,7 @@ const SubscribersView = (props: { title: string }) => {
                 setEmail("");
                 setLastName("");
 
-                onOpen();
+                modalOnOpen();
               }}
               text={"New"}
               icon={<FaPlus />}

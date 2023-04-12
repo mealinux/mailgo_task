@@ -1,6 +1,5 @@
 import { check, Match } from "meteor/check"
 import { Meteor } from "meteor/meteor"
-import SubscriberModel from "/imports/models/SubscriberModel";
 
 export const subscriberValidationForAdd = (newSubscriberData: {
     name: string;
@@ -8,13 +7,10 @@ export const subscriberValidationForAdd = (newSubscriberData: {
     email: string;
   }) => {
     check(newSubscriberData, {
-        _id: Match.Maybe(String),
         email:  String,
         name: String,
         state: Number,
         last_name: Match.Maybe(String),
-        createdAt: Match.Maybe(Date),
-        updatedAt: Match.Maybe(Date),
     })
 
 
@@ -29,13 +25,10 @@ export const subscriberValidationForUpdate = (newSubscriberData: {
     email: string;
   }) => {
     check(newSubscriberData, {
-        _id: Match.Maybe(String),
         email:  String,
         name: String,
-        state: Number,
+        state: Match.Maybe(Number),
         last_name: Match.Maybe(String),
-        createdAt: Match.Maybe(Date),
-        updatedAt: Match.Maybe(Date),
     })
 
 
@@ -44,14 +37,8 @@ export const subscriberValidationForUpdate = (newSubscriberData: {
     }
 }
 
-export const subscriberValidationForDelete = (subscriber: SubscriberModel) => {
-    check(subscriber, {
-        _id: String,
-        email:  Match.Maybe(String),
-        name: Match.Maybe(String),
-        last_name: Match.Maybe(String),
-        state: Match.Maybe(Number),
-        createdAt: Match.Maybe(Date),
-        updatedAt: Match.Maybe(Date),
-    })
+export const subscriberValidationForDelete = (subscriberId: string) => {
+    console.log(subscriberId);
+    
+    check(subscriberId, String)
 }

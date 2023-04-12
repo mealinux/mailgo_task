@@ -3,7 +3,7 @@ import Main from "../../Main";
 import { Center, Flex, Input, Spinner, useDisclosure } from "@chakra-ui/react";
 import DataTableCom from "../../components/DataTableCom/DataTableCom";
 
-import { FaPlus, FaUndoAlt, FaTimes, FaFilter } from "react-icons/fa";
+import { FaPlus, FaTimes, FaFilter } from "react-icons/fa";
 import OutlineButtonCom from "../../components/OutlineButtonCom";
 import { ColorsEnum } from "../../constants/ColorsEnum";
 
@@ -52,6 +52,7 @@ const CategoriesView = (props: { title: string }) => {
 
   useEffect(() => {
     setProgressBar(false);
+
     handleChangeDataTable();
   }, []);
 

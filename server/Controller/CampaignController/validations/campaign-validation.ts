@@ -34,12 +34,9 @@ export const campaignValidationForUpdate = (newCampaignData: {
     target: string;
   }, categoryId: string) => {
     check(newCampaignData, {
-        _id: Match.Maybe(String),
         name:  String,
         description: Match.Maybe(String),
         target: String,
-        createdAt: Match.Maybe(Date),
-        updatedAt: Match.Maybe(Date),
     })
 
     check(categoryId, String)
@@ -61,5 +58,9 @@ export const campaignValidationForDelete = (campaign: CampaignModel) => {
         target: Match.Maybe(String),
         createdAt: Match.Maybe(Date),
         updatedAt: Match.Maybe(Date),
+        category: {
+            _id: String,
+            name: String
+        }
     })
 }

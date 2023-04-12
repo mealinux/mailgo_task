@@ -12,26 +12,17 @@ export const UpdateOperation = (props: {
   };
   selectedCategoryId: string;
 }) => {
-  Meteor.call("send-mail", (err: Meteor.Error, res: any) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(res);
-    }
-  });
-
-  Meteor.call(
+  Meteor.callAsync(
     "update-campaign",
     props.selectedCategoryId,
     props.campaign,
-    props.newCampaignData,
-    (err: Meteor.Error, res: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        props.handleChangeDataTable();
-        props.onClose();
-      }
-    }
-  );
+    props.newCampaignData
+  )
+    .then((res: any) => {
+      props.handleChangeDataTable();
+      props.onClose();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

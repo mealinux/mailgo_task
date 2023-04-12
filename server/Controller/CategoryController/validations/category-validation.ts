@@ -25,11 +25,8 @@ export const categoryValidationForUpdate = (newCategoryData: {
     description: string;
   }) => {
     check(newCategoryData, {
-        _id: Match.Maybe(String),
         name:  String,
         description: Match.Maybe(String),
-        createdAt: Match.Maybe(Date),
-        updatedAt: Match.Maybe(Date),
     })
 
 

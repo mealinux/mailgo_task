@@ -20,6 +20,7 @@ export const CampaignsData = (props: {
   setTarget: Dispatch<SetStateAction<string>>;
   setActionType: Dispatch<SetStateAction<ActionEnum>>;
   setSelectedCampaign: Dispatch<SetStateAction<CampaignModel>>;
+  setSelectedCategoryId: Dispatch<SetStateAction<string>>;
 }) => {
   let dataCampaigns: any = [];
 
@@ -42,13 +43,15 @@ export const CampaignsData = (props: {
 
               props.setSelectedCampaign(campaign);
 
+              props.setSelectedCategoryId(campaign.category._id);
+
               props.onOpen();
             }}
           />
           <DeleteButtonCom
             onClick={() => {
               props.setName(campaign.name);
-              props.setDescription(campaign.description);
+              props.setDescription(campaign.description!);
               props.setTarget(campaign.target);
 
               props.setModalTitle("Delete The Campaign");

@@ -3,9 +3,9 @@ import { ActionEnum } from "../../constants/ActionEnum";
 import { AddOperation } from "./DbOperations/AddOperation";
 import { DeleteOperation } from "./DbOperations/DeleteOperation";
 import { UpdateOperation } from "./DbOperations/UpdateOperation";
-import CategoryModel from "/imports/models/CategoryModel";
+import SubscriberModel from "/imports/models/SubscriberModel";
 
-export const Actions = (props: {
+export const DbActions = (props: {
   data: {
     isOpen: boolean;
     onOpen: any;
@@ -13,19 +13,21 @@ export const Actions = (props: {
     handleChangeDataTable: VoidFunction;
     actionType: ActionEnum;
   };
-  category?: CategoryModel;
-  newCategoryData?: {
+  subscriber?: SubscriberModel;
+  newSubscriberData?: {
     name: string;
-    description: string;
+    last_name: string;
+    email: string;
   };
   setName?: Dispatch<SetStateAction<string>>;
-  setDescription?: Dispatch<SetStateAction<string>>;
+  setLastName?: Dispatch<SetStateAction<string>>;
+  setEmail?: Dispatch<SetStateAction<string>>;
 }): any => {
   switch (props.data.actionType) {
     case ActionEnum.ADD:
       AddOperation({
         onClose: props.data.onClose,
-        newCategoryData: props.newCategoryData!,
+        newSubscriberData: props.newSubscriberData!,
         handleChangeDataTable: props.data.handleChangeDataTable,
       });
       break;
@@ -33,15 +35,15 @@ export const Actions = (props: {
       UpdateOperation({
         onClose: props.data.onClose,
         handleChangeDataTable: props.data.handleChangeDataTable,
-        category: props.category!,
-        newCategoryData: props.newCategoryData!,
+        subscriber: props.subscriber!,
+        newSubscriberData: props.newSubscriberData!,
       });
       break;
     case ActionEnum.DELETE:
       DeleteOperation({
         onClose: props.data.onClose,
         handleChangeDataTable: props.data.handleChangeDataTable,
-        category: props.category!,
+        subscriber: props.subscriber!,
       });
       break;
     default:

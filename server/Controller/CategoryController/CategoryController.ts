@@ -12,6 +12,10 @@ export class CategoryController
                
                 addCategory(category);
             },
+
+
+
+            
             'update-category' (category: CategoryModel, newCategoryData: {
                 name: string;
                 description: string;
@@ -21,12 +25,20 @@ export class CategoryController
                
                 updateCategory(category, newCategoryData);
             },
+
+
+
+
             'delete-category' (category: CategoryModel) {
                 categoryValidationForDelete(category);
                     
                 deleteCategory(category);
             },
-            'get-categories'  (offset: number, filters?:{dateRange: Array<Date>, text: string}) {
+
+
+
+
+            'get-categories'  (offset: number, filters?:{dateRange?: Array<Date>, text?: string}) {
                     
                 return getCategories(offset, filters);
             }
