@@ -13,7 +13,6 @@ import {
   FaFilter,
   FaRegEnvelope,
   FaTable,
-  FaTimes,
   FaUsers,
   FaUsersSlash,
 } from "react-icons/fa";

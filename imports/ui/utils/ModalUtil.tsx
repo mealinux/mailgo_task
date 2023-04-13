@@ -14,7 +14,6 @@ import { ColorsEnum } from "../constants/ColorsEnum";
 import { TextEnum } from "../constants/TextEnum";
 import { ActionEnum } from "../constants/ActionEnum";
 import { FaArrowAltCircleRight } from "react-icons/fa";
-import { RoutesEnum } from "../constants/RoutesEnum";
 
 const ModalUtil = (props: {
   children: ReactElement;
