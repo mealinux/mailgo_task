@@ -20,14 +20,13 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowCircleRight } from "react-icons/fa";
 
 import { Accounts } from "meteor/accounts-base";
-import { useUtilState } from "/imports/States/UtilState";
+import { Meteor } from "meteor/meteor";
+import { useModal } from "/imports/context/UtilContext";
 
 const RegisterView = () => {
   const navigate = useNavigate();
 
-  const setProgressBar = useUtilState((state: any) => state.setProgressBar);
-
-  const progressBar = useUtilState((state: any) => state.progressBar);
+  const { progressBar, setProgressBar } = useModal();
 
   const [name, setName] = useState("");
   const [last_name, setLast_name] = useState("");
@@ -57,6 +56,9 @@ const RegisterView = () => {
   };
 
   useEffect(() => {
+    if (Meteor.userId()) {
+      navigate(RoutesEnum.DASHBOARD);
+    }
     setProgressBar(false);
   }, []);
 

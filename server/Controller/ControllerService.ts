@@ -13,6 +13,6 @@ export const ControllerService = () => {
     new UserController().init();
     new SubscriberController().init();
     new VerificationController().init();
-    new StaticticsController().init()
+    new StaticticsController().init();
     new ImportController().init();
 }

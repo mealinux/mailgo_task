@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import Main from "../../Main";
 import { Center, Flex, Input, Spinner, useDisclosure } from "@chakra-ui/react";
 import DataTableCom from "../../components/DataTableCom/DataTableCom";
@@ -15,24 +15,15 @@ import { DataColumns } from "./data/DataColumns";
 import { ActionEnum } from "../../constants/ActionEnum";
 import SubscriberModel from "/imports/models/SubscriberModel";
 import ModalView from "./Modals/ModalView";
+import { useModal } from "/imports/context/UtilContext";
 import DetailModalView from "./Modals/DetailModalView";
 import ImportModalView from "./Modals/ImportModalView";
-import { useUtilState } from "/imports/States/UtilState";
 
 const SubscribersView = (props: { title: string }) => {
-  const setProgressBar = useUtilState((state: any) => state.setProgressBar);
+  const { progressBar, setProgressBar } = useModal();
 
-  const setImportModalIsOpen = useUtilState(
-    (state: any) => state.setImportModalIsOpen
-  );
-
-  const setProgressBarForDetailModal = useUtilState(
-    (state: any) => state.setProgressBarForDetailModal
-  );
-
-  const progressBarForDetailModal = useUtilState(
-    (state: any) => state.progressBarForDetailModal
-  );
+  const [progressBarForDetailModal, setProgressBarForDetailModal] =
+    useState(false);
 
   const {
     isOpen: modalIsOpen,
@@ -44,6 +35,12 @@ const SubscribersView = (props: { title: string }) => {
     isOpen: modalDetailIsOpen,
     onOpen: modalDetailOnOpen,
     onClose: modalDetailOnClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: modalImportIsOpen,
+    onOpen: modalImportOnOpen,
+    onClose: modalImportOnClose,
   } = useDisclosure();
 
   //for modal
@@ -121,7 +118,14 @@ const SubscribersView = (props: { title: string }) => {
 
   return (
     <Main style={{ width: "80%" }} title={props.title}>
-      <ImportModalView handleChangeDataTable={handleChangeDataTable} />
+      <ImportModalView
+        progressBar={progressBar}
+        setProgressBar={setProgressBar}
+        isOpen={modalImportIsOpen}
+        onOpen={modalImportOnOpen}
+        onClose={modalImportOnClose}
+        handleChangeDataTable={handleChangeDataTable}
+      />
       <DetailModalView
         isOpen={modalDetailIsOpen}
         onOpen={modalDetailOnOpen}
@@ -217,9 +221,9 @@ const SubscribersView = (props: { title: string }) => {
             <OutlineButtonCom
               text={"Import"}
               icon={<FaUndoAlt />}
-              onClick={() => setImportModalIsOpen(true)}
               customClickColor={ColorsEnum.LIGHTEST_PURPLE}
               customContentColor={ColorsEnum.RED}
+              onClick={modalImportOnOpen}
             />
             <OutlineButtonCom
               onClick={() => {

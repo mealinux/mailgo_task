@@ -19,13 +19,11 @@ import { useNavigate } from "react-router-dom";
 
 import { FaArrowCircleRight } from "react-icons/fa";
 import { Meteor } from "meteor/meteor";
-import { useUtilState } from "/imports/States/UtilState";
+import { useModal } from "/imports/context/UtilContext";
 
 const LoginView = () => {
   const navigate = useNavigate();
-  const setProgressBar = useUtilState((state: any) => state.setProgressBar);
-
-  const progressBar = useUtilState((state: any) => state.progressBar);
+  const { progressBar, setProgressBar } = useModal();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,6 +43,10 @@ const LoginView = () => {
   };
 
   useEffect(() => {
+    if (Meteor.userId()) {
+      navigate(RoutesEnum.DASHBOARD);
+    }
+
     setProgressBar(false);
   }, []);
 

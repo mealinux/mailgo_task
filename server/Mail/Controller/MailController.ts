@@ -16,9 +16,10 @@ export class MailController {
                 
                 await SendMailForSubscription(maildata, selectedCampaign)
             },
-            'send-info-mail' (maildata: MailModel, subscriberId: string){
+
+            async 'send-info-mail' (maildata: MailModel){
                 
-                SendInfoMail(maildata, subscriberId)
+                await SendInfoMail(maildata)
             }
         })
     }

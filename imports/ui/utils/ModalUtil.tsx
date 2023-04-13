@@ -15,12 +15,11 @@ import { TextEnum } from "../constants/TextEnum";
 import { ActionEnum } from "../constants/ActionEnum";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { RoutesEnum } from "../constants/RoutesEnum";
-import { useSubscriberState } from "/imports/States/SubsribersState";
 
 const ModalUtil = (props: {
   children: ReactElement;
   isOpen: boolean;
-  onClose?: VoidFunction;
+  onClose: VoidFunction;
   onClickAdd?: CallableFunction;
   onClickAddAndSend?: CallableFunction;
   title: string;
@@ -29,7 +28,7 @@ const ModalUtil = (props: {
   actionType?: ActionEnum;
 }) => {
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose!}>
+    <Modal isOpen={props.isOpen} onClose={props.onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader fontSize={TextEnum.H6_SIZE}>{props.title}</ModalHeader>
@@ -44,7 +43,8 @@ const ModalUtil = (props: {
             customContentColor={ColorsEnum.GREY}
             onClick={props.onClose}
           />
-          {props.actionType != ActionEnum.DETAIL ? (
+          {props.actionType != ActionEnum.ADD_AND_SEND &&
+          props.actionType != ActionEnum.DETAIL ? (
             <OutlineButtonCom
               text={props.buttonText}
               icon={props.icon}
@@ -56,8 +56,7 @@ const ModalUtil = (props: {
             <></>
           )}
 
-          {props.actionType == ActionEnum.ADD &&
-          window.location.pathname == RoutesEnum.CAMPAIGN ? (
+          {props.actionType == ActionEnum.ADD_AND_SEND ? (
             <OutlineButtonCom
               text="ADD AND SEND"
               icon={<FaArrowAltCircleRight />}

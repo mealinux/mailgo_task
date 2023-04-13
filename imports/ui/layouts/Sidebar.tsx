@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
 import { ColorsEnum } from "../constants/ColorsEnum";
 
@@ -7,10 +7,12 @@ import {
   FaUser,
   FaBuromobelexperte,
   FaTable,
+  FaEnvelope,
 } from "react-icons/fa";
 import { TextEnum } from "../constants/TextEnum";
 import { useNavigate } from "react-router";
 import { RoutesEnum } from "../constants/RoutesEnum";
+import SidebarButtonCom from "../components/SidebarButtonCom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -24,114 +26,40 @@ const Sidebar = () => {
           alignItems={"start"}
           gap={2}
         >
-          <Button
+          <SidebarButtonCom
             isActive={RoutesEnum.DASHBOARD === window.location.pathname}
-            textColor={ColorsEnum.GREY}
-            bg={ColorsEnum.WHITE}
-            _hover={{
-              textColor: ColorsEnum.DARKEST_PURPLE,
-            }}
-            _active={{
-              bg: ColorsEnum.LIGHTEST_PURPLE,
-              textColor: ColorsEnum.DARKEST_PURPLE,
-            }}
-            _focus={{
-              textColor: ColorsEnum.DARKEST_PURPLE,
-              bg: ColorsEnum.WHITE,
-            }}
             onClick={() => navigate(RoutesEnum.DASHBOARD)}
-            padding={3}
-            borderRadius={30}
-            width={130}
-          >
-            <Flex justifyContent={"start"} alignItems={"start"}>
-              <FaAlignJustify fontSize={TextEnum.MEDIUM_SIZE} />
-              <Text ml={2} fontSize={TextEnum.TINY_SIZE} fontWeight={"light"}>
-                Dashboard
-              </Text>
-            </Flex>
-          </Button>
-          <Button
+            text="Dashboard"
+            icon={<FaAlignJustify fontSize={TextEnum.MEDIUM_SIZE} />}
+          />
+
+          <SidebarButtonCom
             isActive={RoutesEnum.SUBSCRIBERS === window.location.pathname}
-            textColor={ColorsEnum.GREY}
-            bg={ColorsEnum.WHITE}
-            _hover={{
-              textColor: ColorsEnum.DARKEST_PURPLE,
-            }}
-            _active={{
-              bg: ColorsEnum.LIGHTEST_PURPLE,
-              textColor: ColorsEnum.DARKEST_PURPLE,
-            }}
-            _focus={{
-              textColor: ColorsEnum.DARKEST_PURPLE,
-              bg: ColorsEnum.WHITE,
-            }}
             onClick={() => navigate(RoutesEnum.SUBSCRIBERS)}
-            padding={3}
-            borderRadius={30}
-            width={130}
-          >
-            <Flex justifyContent={"start"} alignItems={"start"}>
-              <FaUser fontSize={TextEnum.MEDIUM_SIZE} />
-              <Text ml={2} fontSize={TextEnum.TINY_SIZE} fontWeight={"light"}>
-                Subscribers
-              </Text>
-            </Flex>
-          </Button>
-          <Button
+            text="Subscribers"
+            icon={<FaUser fontSize={TextEnum.MEDIUM_SIZE} />}
+          />
+
+          <SidebarButtonCom
             isActive={RoutesEnum.CATEGORY === window.location.pathname}
-            textColor={ColorsEnum.GREY}
-            bg={ColorsEnum.WHITE}
-            _hover={{
-              textColor: ColorsEnum.DARKEST_PURPLE,
-            }}
-            _active={{
-              bg: ColorsEnum.LIGHTEST_PURPLE,
-              textColor: ColorsEnum.DARKEST_PURPLE,
-            }}
-            _focus={{
-              textColor: ColorsEnum.DARKEST_PURPLE,
-              bg: ColorsEnum.WHITE,
-            }}
             onClick={() => navigate(RoutesEnum.CATEGORY)}
-            padding={3}
-            borderRadius={30}
-            width={130}
-          >
-            <Flex justifyContent={"start"} alignItems={"start"}>
-              <FaBuromobelexperte fontSize={TextEnum.MEDIUM_SIZE} />
-              <Text ml={2} fontSize={TextEnum.TINY_SIZE} fontWeight={"light"}>
-                Categories
-              </Text>
-            </Flex>
-          </Button>
-          <Button
+            text="Categories"
+            icon={<FaBuromobelexperte fontSize={TextEnum.MEDIUM_SIZE} />}
+          />
+
+          <SidebarButtonCom
             isActive={RoutesEnum.CAMPAIGN === window.location.pathname}
-            textColor={ColorsEnum.GREY}
-            bg={ColorsEnum.WHITE}
-            _hover={{
-              textColor: ColorsEnum.DARKEST_PURPLE,
-            }}
-            _active={{
-              bg: ColorsEnum.LIGHTEST_PURPLE,
-              textColor: ColorsEnum.DARKEST_PURPLE,
-            }}
-            _focus={{
-              textColor: ColorsEnum.DARKEST_PURPLE,
-              bg: ColorsEnum.WHITE,
-            }}
             onClick={() => navigate(RoutesEnum.CAMPAIGN)}
-            padding={3}
-            borderRadius={30}
-            width={130}
-          >
-            <Flex justifyContent={"start"} alignItems={"start"}>
-              <FaTable fontSize={TextEnum.MEDIUM_SIZE} />
-              <Text ml={2} fontSize={TextEnum.TINY_SIZE} fontWeight={"light"}>
-                Campaigns
-              </Text>
-            </Flex>
-          </Button>
+            text="Campaigns"
+            icon={<FaTable fontSize={TextEnum.MEDIUM_SIZE} />}
+          />
+
+          <SidebarButtonCom
+            isActive={RoutesEnum.MAIL === window.location.pathname}
+            onClick={() => navigate(RoutesEnum.MAIL)}
+            text="Send a Mail"
+            icon={<FaEnvelope fontSize={TextEnum.MEDIUM_SIZE} />}
+          />
         </Flex>
       </Flex>
     </Box>

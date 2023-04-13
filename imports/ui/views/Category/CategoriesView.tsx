@@ -13,12 +13,12 @@ import { DataTableEnum } from "../../constants/DataTableEnum";
 import { DataColumns } from "./data/DataColumns";
 import { ActionEnum } from "../../constants/ActionEnum";
 import ModalView from "./ModalView";
+import { useModal } from "/imports/context/UtilContext";
 import CategoryModel from "/imports/models/CategoryModel";
 import { CategoriesData } from "./data/CategoriesData";
-import { useUtilState } from "/imports/States/UtilState";
 
 const CategoriesView = (props: { title: string }) => {
-  const setProgressBar = useUtilState((state: any) => state.setProgressBar);
+  const { setProgressBar } = useModal();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 

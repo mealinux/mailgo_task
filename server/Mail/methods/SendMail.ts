@@ -38,11 +38,32 @@ export const CampaignDB = CampaignCollection;
 
 
 
-export const SendInfoMail = (mailData: MailModel,  subscriberId?: string)=>{
+export const SendInfoMail = async (mailData: MailModel)=>{
 
-    SendMail(mailData)
+    let subscribers = getSubscribers(0, [1]);
+    
+    let currentTotalSubscribers = 0;
 
-    MailSendInfoDB.insert({ subscriber_id: subscriberId, subject: mailData.subject, content: mailData.content })
+    while(subscribers.data.length > 0){
+        
+        let counterLimit = 0;
+        while(counterLimit < subscribers.data.length){
+
+            mailData.toEmail = subscribers.data[counterLimit].email
+           
+            await addToInfoMailQueue(mailData);
+            
+            counterLimit++;
+        }
+       
+        currentTotalSubscribers += DataTableEnum.LIMIT;
+
+        if(counterLimit){
+            subscribers = getSubscribers(currentTotalSubscribers, [1]);
+        }
+    }
+
+    await startQueue();  
 }
 
 
@@ -113,6 +134,25 @@ async function addToMailQueue(mailData: any, subscriberId: string, campaignId: s
         });
     });
   }
+
+
+
+
+
+  async function addToInfoMailQueue(mailData: any) {
+    return new Promise((resolve, reject) => {
+      mailQueue.add(mailData)
+        .then(job => {
+            MailSendInfoDB.insert({ subject: mailData.subject, content: mailData.content })
+
+            resolve(job);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
 
 
 

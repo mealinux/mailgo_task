@@ -11,5 +11,7 @@ export enum RoutesEnum {
 
   VERIFY = "/verify",
 
+  MAIL = "/mail",
+
   NOTFOUND = "/notfound",
 }

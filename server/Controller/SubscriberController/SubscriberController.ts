@@ -46,7 +46,7 @@ export class SubscriberController
 
 
             async 'get-subscriber-detail'  (subscriberId: string) {
-                console.log(subscriberId);
+                
                 
                 const campaignClickNumberOfSubscriber = await getCampaignClickCountOfSubscriber(subscriberId);
                 const mailNumberOfSubscriber = await getMailCountOfSubscriber(subscriberId);

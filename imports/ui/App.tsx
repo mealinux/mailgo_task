@@ -3,6 +3,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { RenderRoutes } from "../routes/Routes";
 
 import { ColorsEnum } from "./constants/ColorsEnum";
+import { ModalProvider } from "../context/UtilContext";
 
 export const App = () => {
   const theme = extendTheme({
@@ -20,8 +21,10 @@ export const App = () => {
   });
 
   return (
-    <ChakraProvider theme={theme}>
-      <RenderRoutes />
-    </ChakraProvider>
+    <ModalProvider>
+      <ChakraProvider theme={theme}>
+        <RenderRoutes />
+      </ChakraProvider>
+    </ModalProvider>
   );
 };

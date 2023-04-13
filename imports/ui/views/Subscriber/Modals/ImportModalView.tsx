@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import {
   Alert,
   AlertIcon,
   Center,
+  Divider,
   Flex,
   Input,
   Spinner,
@@ -10,44 +11,35 @@ import {
 } from "@chakra-ui/react";
 
 import ModalUtil from "../../../utils/ModalUtil";
-import { useSubscriberState } from "/imports/States/SubsribersState";
 import { FaFileImport } from "react-icons/fa";
 import { Meteor } from "meteor/meteor";
-import { useUtilState } from "/imports/States/UtilState";
-import * as XLSX from "xlsx";
 
-const ImportModalView = (props: { handleChangeDataTable: VoidFunction }) => {
+import * as XLSX from "xlsx";
+import { ColorsEnum } from "/imports/ui/constants/ColorsEnum";
+
+const ImportModalView = (props: {
+  progressBar: boolean;
+  setProgressBar: Dispatch<SetStateAction<boolean>>;
+  isOpen: boolean;
+  onOpen: VoidFunction;
+  onClose: VoidFunction;
+  handleChangeDataTable: VoidFunction;
+}) => {
   const fileReader = new FileReader();
 
-  const progressBar = useUtilState((state: any) => state.progressBar);
+  const [importModalIsOpen, setImportModalIsOpen] = useState<boolean>();
 
-  const setProgressBar = useUtilState((state: any) => state.setProgressBar);
+  const [importFileAlertMessage, setImportFileAlertMessage] =
+    useState<boolean>();
 
-  const importModalIsOpen = useSubscriberState(
-    (state: any) => state.importModalIsOpen
-  );
-  const setImportModalIsOpen = useSubscriberState(
-    (state: any) => state.setImportModalIsOpen
-  );
-
-  const setImportFileAlertMessage = useSubscriberState(
-    (state: any) => state.setImportFileAlertMessage
-  );
-
-  const importFileAlertMessage = useSubscriberState(
-    (state: any) => state.importFileAlertMessage
-  );
-
-  const importFile = useSubscriberState((state: any) => state.importFile);
-  const setImportFile = useSubscriberState((state: any) => state.setImportFile);
-
+  const [importFile, setImportFile] = useState<any>();
   /* 
   -----------------------------------------------------
   start onHandleFile file function
   -----------------------------------------------------
   */
   const onHandleFile = async () => {
-    const fileExtension = importFile.name.split(".").pop();
+    const fileExtension = importFile!.name.split(".").pop();
     let fileOutput;
 
     if (importFile) {
@@ -56,7 +48,6 @@ const ImportModalView = (props: { handleChangeDataTable: VoidFunction }) => {
 
         if (fileExtension != "csv") {
           fileOutput = XLSX.read(fileOutput);
-          console.log(fileOutput.Sheets.Sheet1);
         }
 
         await Meteor.callAsync("import-file", fileExtension, fileOutput)
@@ -68,7 +59,7 @@ const ImportModalView = (props: { handleChangeDataTable: VoidFunction }) => {
             console.log(err);
           })
           .finally(() => {
-            setProgressBar(false);
+            props.setProgressBar(false);
           });
       };
 
@@ -88,17 +79,18 @@ const ImportModalView = (props: { handleChangeDataTable: VoidFunction }) => {
   const onModalClose = () => {
     setImportModalIsOpen(false);
     setImportFileAlertMessage(false);
+    props.onClose();
   };
 
   return (
     <ModalUtil
-      isOpen={importModalIsOpen}
+      isOpen={props.isOpen}
       onClose={() => onModalClose()}
       title={"Import File"}
       icon={<FaFileImport />}
       buttonText={"Import"}
       onClickAdd={() => {
-        setProgressBar(true);
+        props.setProgressBar(true);
         onHandleFile();
       }}
     >
@@ -114,21 +106,24 @@ const ImportModalView = (props: { handleChangeDataTable: VoidFunction }) => {
           )}
         </Flex>
         <Flex mb={3}>
-          <Text fontSize={10}>
-            <Alert status="warning">
-              <AlertIcon />
-              For .csv file, disagn pattern is seperated with comma in for each
-              row, like this İsmayil,Kılıç,ismayil@gmail.com
-              <br />
-              ------------------------------------------------------------------
-              <br />
-              For .xslx or .xls file (Excel), disagn pattern is A1 column=name,
-              B1 column=last name and C1 column=email in for each row
-            </Alert>
-          </Text>
+          <Alert status="warning">
+            <AlertIcon />
+            <Flex flexDirection={"column"}>
+              <Text fontSize={10}>
+                For .csv file, design pattern is seperated with comma in for
+                each row, like this İsmayil,Kılıç,ismayil@gmail.com
+              </Text>
+              <Divider h={0.5} bgColor={ColorsEnum.LIGHT_GREY} mb={2} mt={2} />
+              <Text fontSize={10}>
+                For .xslx or .xls file (Excel), design pattern is A1
+                column=name, B1 column=last name and C1 column=email in for each
+                row
+              </Text>
+            </Flex>
+          </Alert>
         </Flex>
         <Flex>
-          {progressBar ? (
+          {props.progressBar ? (
             <Center>
               <Spinner size={"md"}></Spinner>
             </Center>
@@ -139,7 +134,7 @@ const ImportModalView = (props: { handleChangeDataTable: VoidFunction }) => {
             type="file"
             accept=".csv, .xls, .xlsx"
             size={"sm"}
-            disabled={progressBar}
+            disabled={props.progressBar}
             onChange={(e: any) => {
               setImportFile(e.target.files[0]);
             }}
