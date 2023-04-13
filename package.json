@@ -28,7 +28,9 @@
     "react-router": "^6.10.0",
     "react-router-dom": "^6.10.0",
     "react-router-static": "^1.0.0",
-    "styled-components": "^5.3.9"
+    "styled-components": "^5.3.9",
+    "xlsx": "^0.18.5",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
     "@types/mocha": "^8.2.3",

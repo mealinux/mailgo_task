@@ -102,7 +102,6 @@ const CampaignsView = (props: { title: string }) => {
             setSelectedCampaign,
             setSelectedCategoryId,
           });
-          console.log(data.campaigns.data);
 
           setCategories(data.categories.data);
           setCampaignData(dataAll);
@@ -204,7 +203,7 @@ const CampaignsView = (props: { title: string }) => {
                 setModalButtonText("ADD");
                 setModalIcon(<FaPlus />);
 
-                setActionType(ActionEnum.ADD);
+                setActionType(ActionEnum.ADD_AND_SEND);
 
                 setName("");
                 setDescription("");

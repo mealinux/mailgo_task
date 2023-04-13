@@ -17,9 +17,10 @@ import SubscriberModel from "/imports/models/SubscriberModel";
 import ModalView from "./Modals/ModalView";
 import { useModal } from "/imports/context/UtilContext";
 import DetailModalView from "./Modals/DetailModalView";
+import ImportModalView from "./Modals/ImportModalView";
 
 const SubscribersView = (props: { title: string }) => {
-  const { setProgressBar } = useModal();
+  const { progressBar, setProgressBar } = useModal();
 
   const [progressBarForDetailModal, setProgressBarForDetailModal] =
     useState(false);
@@ -34,6 +35,12 @@ const SubscribersView = (props: { title: string }) => {
     isOpen: modalDetailIsOpen,
     onOpen: modalDetailOnOpen,
     onClose: modalDetailOnClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: modalImportIsOpen,
+    onOpen: modalImportOnOpen,
+    onClose: modalImportOnClose,
   } = useDisclosure();
 
   //for modal
@@ -111,6 +118,14 @@ const SubscribersView = (props: { title: string }) => {
 
   return (
     <Main style={{ width: "80%" }} title={props.title}>
+      <ImportModalView
+        progressBar={progressBar}
+        setProgressBar={setProgressBar}
+        isOpen={modalImportIsOpen}
+        onOpen={modalImportOnOpen}
+        onClose={modalImportOnClose}
+        handleChangeDataTable={handleChangeDataTable}
+      />
       <DetailModalView
         isOpen={modalDetailIsOpen}
         onOpen={modalDetailOnOpen}
@@ -208,6 +223,7 @@ const SubscribersView = (props: { title: string }) => {
               icon={<FaUndoAlt />}
               customClickColor={ColorsEnum.LIGHTEST_PURPLE}
               customContentColor={ColorsEnum.RED}
+              onClick={modalImportOnOpen}
             />
             <OutlineButtonCom
               onClick={() => {

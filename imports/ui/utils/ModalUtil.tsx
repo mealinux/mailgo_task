@@ -14,6 +14,7 @@ import { ColorsEnum } from "../constants/ColorsEnum";
 import { TextEnum } from "../constants/TextEnum";
 import { ActionEnum } from "../constants/ActionEnum";
 import { FaArrowAltCircleRight } from "react-icons/fa";
+import { RoutesEnum } from "../constants/RoutesEnum";
 
 const ModalUtil = (props: {
   children: ReactElement;
@@ -42,7 +43,8 @@ const ModalUtil = (props: {
             customContentColor={ColorsEnum.GREY}
             onClick={props.onClose}
           />
-          {props.actionType != ActionEnum.DETAIL ? (
+          {props.actionType != ActionEnum.ADD_AND_SEND &&
+          props.actionType != ActionEnum.DETAIL ? (
             <OutlineButtonCom
               text={props.buttonText}
               icon={props.icon}
@@ -54,7 +56,7 @@ const ModalUtil = (props: {
             <></>
           )}
 
-          {props.actionType == ActionEnum.ADD ? (
+          {props.actionType == ActionEnum.ADD_AND_SEND ? (
             <OutlineButtonCom
               text="ADD AND SEND"
               icon={<FaArrowAltCircleRight />}

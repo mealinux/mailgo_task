@@ -11,6 +11,7 @@ import { CampaignVerification } from "../ui/Verification/CampaignVerification";
 import { NotFoundView } from "../ui/views/Util/NotFoundView";
 import { UnsubscribeVerification } from "../ui/Verification/UnsubscribeVerification";
 import { UnsubscribeSuccessView } from "../ui/views/Util/UnsubscribeSuccessView";
+import MailView from "../ui/views/Mail/MailView";
 
 export const RenderRoutes = () => (
   <BrowserRouter>
@@ -37,15 +38,20 @@ export const RenderRoutes = () => (
       ></Route>
       <Route
         path={RoutesEnum.CATEGORY}
-        element={<CategoriesView title={"Category"} />}
+        element={<CategoriesView title={"Categories"} />}
       ></Route>
       <Route
         path={RoutesEnum.CAMPAIGN}
-        element={<CampaignsView title={"Campaign"} />}
+        element={<CampaignsView title={"Campaigns"} />}
       ></Route>
       <Route
         path={RoutesEnum.SUBSCRIBERS}
         element={<SubscribersView title={"Subscribers"} />}
+      ></Route>
+
+      <Route
+        path={RoutesEnum.MAIL}
+        element={<MailView title={"Send a Mail"} />}
       ></Route>
 
       <Route path={RoutesEnum.NOTFOUND} element={<NotFoundView />}></Route>

@@ -18,7 +18,7 @@ const  SubscriberClickRelationDB = SubscriberClickCollection;
 
 
 export const CampaignVerification = (props: {hash: string}) =>{
-        console.log(props.hash);
+      
         
     const campaignSubscriberRelation = CampaignSubscriberHashDB.findOne({ hash: props.hash });
 

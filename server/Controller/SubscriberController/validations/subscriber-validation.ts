@@ -38,7 +38,7 @@ export const subscriberValidationForUpdate = (newSubscriberData: {
 }
 
 export const subscriberValidationForDelete = (subscriberId: string) => {
-    console.log(subscriberId);
+   
     
     check(subscriberId, String)
 }

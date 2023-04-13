@@ -6,14 +6,10 @@ import React, {
   useContext,
   useState,
 } from "react";
-import SubscriberModel from "../models/SubscriberModel";
 
 export interface UtilModel {
   progressBar: boolean;
   setProgressBar: Dispatch<SetStateAction<boolean>>;
-
-  selectedSubscriber: SubscriberModel;
-  setSelectedSubscriber: Dispatch<SetStateAction<SubscriberModel>>;
 }
 
 export const ModalContext = createContext<UtilModel | null>(null);
@@ -29,15 +25,9 @@ export function useModal(): UtilModel {
 export function ModalProvider(props: PropsWithChildren<{}>) {
   const [progressBar, setProgressBar] = useState<any>({} as UtilModel);
 
-  const [selectedSubscriber, setSelectedSubscriber] = useState<SubscriberModel>(
-    {} as SubscriberModel
-  );
-
   const value: UtilModel = {
     progressBar,
     setProgressBar,
-    selectedSubscriber,
-    setSelectedSubscriber,
   };
 
   return (
