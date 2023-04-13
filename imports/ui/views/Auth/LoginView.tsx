@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Box,
@@ -15,7 +15,7 @@ import { ColorsEnum } from "../../constants/ColorsEnum";
 import { TextEnum } from "../../constants/TextEnum";
 import { RoutesEnum } from "../../constants/RoutesEnum";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { FaArrowCircleRight } from "react-icons/fa";
 import { Meteor } from "meteor/meteor";
@@ -43,6 +43,10 @@ const LoginView = () => {
   };
 
   useEffect(() => {
+    if (Meteor.userId()) {
+      navigate(RoutesEnum.DASHBOARD);
+    }
+
     setProgressBar(false);
   }, []);
 

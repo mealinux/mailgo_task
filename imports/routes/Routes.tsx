@@ -1,6 +1,12 @@
 import React from "react";
 import LoginView from "../ui/views/Auth/LoginView";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import { RoutesEnum } from "../ui/constants/RoutesEnum";
 import RegisterView from "../ui/views/Auth/RegisterView";
 import DashboardView from "../ui/views/DashboardView";
@@ -12,10 +18,13 @@ import { NotFoundView } from "../ui/views/Util/NotFoundView";
 import { UnsubscribeVerification } from "../ui/Verification/UnsubscribeVerification";
 import { UnsubscribeSuccessView } from "../ui/views/Util/UnsubscribeSuccessView";
 import MailView from "../ui/views/Mail/MailView";
+import { Meteor } from "meteor/meteor";
 
 export const RenderRoutes = () => (
   <BrowserRouter>
     <Routes>
+      <Route path="/" element={<LoginView />}></Route>
+
       <Route path={RoutesEnum.LOGIN} element={<LoginView />}></Route>
       <Route path={RoutesEnum.REGISTER} element={<RegisterView />}></Route>
 

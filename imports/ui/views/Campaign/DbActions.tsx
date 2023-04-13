@@ -28,7 +28,7 @@ export const DbActions = (props: {
   mailSend?: boolean;
 }): any => {
   switch (props.actionData.data.actionType) {
-    case ActionEnum.ADD:
+    case ActionEnum.ADD_AND_SEND:
       AddOperation({
         onClose: props.actionData.data.onClose,
         newCampaignData: props.actionData.newCampaignData!,

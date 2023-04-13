@@ -100,16 +100,17 @@ export const deleteCampaign = (campaign: CampaignModel) =>
 //campaign ile category'ler category_campaign tablosunda campaign_id ile category_id
 //ile eşleşiyor ve her campaign ait olduğu category ile birlikte geliyor
 const pipelineQuery = (offset?: number, dateRange?: object,  $textForFilter?: object,  limitForFilter?: DataTableEnum, sortForFilter?: Number) => {
-  
+    console.log(dateRange);
+    
     return [
       {
-        $sort: { createdAt: sortForFilter }
+        $match: {
+          createdAt: dateRange,
+          $text: $textForFilter,
+        }
       },
       {
-        $match: {
-            dateRange,
-            $text: $textForFilter,
-        }
+        $sort: { createdAt: sortForFilter }
       },
       {
         $skip: offset 
