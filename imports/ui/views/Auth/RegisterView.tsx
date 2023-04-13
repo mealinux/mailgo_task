@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Box,
@@ -15,17 +15,19 @@ import { ColorsEnum } from "../../constants/ColorsEnum";
 import { TextEnum } from "../../constants/TextEnum";
 import { RoutesEnum } from "../../constants/RoutesEnum";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { FaArrowCircleRight } from "react-icons/fa";
 
 import { Accounts } from "meteor/accounts-base";
-import UtilContext from "/imports/context/UtilContext";
+import { useUtilState } from "/imports/States/UtilState";
 
 const RegisterView = () => {
   const navigate = useNavigate();
 
-  const util = useContext(UtilContext);
+  const setProgressBar = useUtilState((state: any) => state.setProgressBar);
+
+  const progressBar = useUtilState((state: any) => state.progressBar);
 
   const [name, setName] = useState("");
   const [last_name, setLast_name] = useState("");
@@ -34,7 +36,7 @@ const RegisterView = () => {
   const [password, setPassword] = useState("");
 
   const registerHandle = () => {
-    util?.setProgressBar(true);
+    setProgressBar(true);
 
     setTimeout(() => {
       const user = {
@@ -46,7 +48,7 @@ const RegisterView = () => {
 
       Accounts.createUser(user, (error) => {
         if (error) {
-          util?.setProgressBar(false);
+          setProgressBar(false);
         } else {
           navigate(RoutesEnum.DASHBOARD);
         }
@@ -55,7 +57,7 @@ const RegisterView = () => {
   };
 
   useEffect(() => {
-    util?.setProgressBar(false);
+    setProgressBar(false);
   }, []);
 
   return (
@@ -147,7 +149,7 @@ const RegisterView = () => {
                     Log in
                   </Button>
                   <Button
-                    isLoading={util?.progressBar}
+                    isLoading={progressBar}
                     bg={ColorsEnum.MEDIUM_PURPLE}
                     size="md"
                     rightIcon={<FaArrowCircleRight />}

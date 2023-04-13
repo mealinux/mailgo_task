@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Box,
@@ -15,15 +15,17 @@ import { ColorsEnum } from "../../constants/ColorsEnum";
 import { TextEnum } from "../../constants/TextEnum";
 import { RoutesEnum } from "../../constants/RoutesEnum";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { FaArrowCircleRight } from "react-icons/fa";
 import { Meteor } from "meteor/meteor";
-import { useModal } from "/imports/context/UtilContext";
+import { useUtilState } from "/imports/States/UtilState";
 
 const LoginView = () => {
   const navigate = useNavigate();
-  const { progressBar, setProgressBar } = useModal();
+  const setProgressBar = useUtilState((state: any) => state.setProgressBar);
+
+  const progressBar = useUtilState((state: any) => state.progressBar);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
