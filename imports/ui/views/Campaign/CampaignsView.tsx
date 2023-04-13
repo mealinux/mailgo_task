@@ -19,14 +19,14 @@ import { Meteor } from "meteor/meteor";
 import { DataTableEnum } from "../../constants/DataTableEnum";
 import { DataColumns } from "./data/DataColumns";
 import { ActionEnum } from "../../constants/ActionEnum";
+import { useModal } from "/imports/context/UtilContext";
 import { CampaignsData } from "./data/CampaignsData";
 import CampaignModel from "/imports/models/CampaignModel";
 import CategoryModel from "/imports/models/CategoryModel";
 import ModalView from "./ModalView";
-import { useUtilState } from "/imports/States/UtilState";
 
 const CampaignsView = (props: { title: string }) => {
-  const setProgressBar = useUtilState((state: any) => state.setProgressBar);
+  const { setProgressBar } = useModal();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 

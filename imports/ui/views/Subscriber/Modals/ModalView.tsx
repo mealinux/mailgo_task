@@ -26,6 +26,16 @@ const ModalView = (props: {
 }) => {
   return props.actionType != ActionEnum.DELETE ? (
     <ModalUtil
+      onClickAddAndSend={() => {
+        DbActions({
+          data: props,
+          newSubscriberData: {
+            name: props.name,
+            last_name: props.last_name,
+            email: props.email,
+          },
+        });
+      }}
       onClickAdd={() =>
         DbActions({
           data: props,
@@ -38,6 +48,7 @@ const ModalView = (props: {
         })
       }
       isOpen={props.isOpen}
+      onClose={() => props.onClose()}
       title={props.modalTitle}
       buttonText={props.modalButtonText}
       icon={props.modalIcon}
