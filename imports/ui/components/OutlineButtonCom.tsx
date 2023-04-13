@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 
 import { Button, Text } from "@chakra-ui/react";
+import { useUtilState } from "/imports/States/UtilState";
 
 const OutlineButtonCom = (props: {
   text?: string;
@@ -10,8 +11,11 @@ const OutlineButtonCom = (props: {
   isLoading?: boolean;
   onClick?: VoidFunction;
 }) => {
+  const progressBar = useUtilState((state: any) => state.progressBar);
+
   return (
     <Button
+      disabled={progressBar}
       isLoading={props.isLoading}
       borderColor={props.customContentColor}
       fontWeight={"bold"}

@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Main from "../../Main";
 import { Center, Flex, Input, Spinner, useDisclosure } from "@chakra-ui/react";
 import DataTableCom from "../../components/DataTableCom/DataTableCom";
@@ -15,14 +15,24 @@ import { DataColumns } from "./data/DataColumns";
 import { ActionEnum } from "../../constants/ActionEnum";
 import SubscriberModel from "/imports/models/SubscriberModel";
 import ModalView from "./Modals/ModalView";
-import { useModal } from "/imports/context/UtilContext";
 import DetailModalView from "./Modals/DetailModalView";
+import ImportModalView from "./Modals/ImportModalView";
+import { useUtilState } from "/imports/States/UtilState";
 
 const SubscribersView = (props: { title: string }) => {
-  const { setProgressBar } = useModal();
+  const setProgressBar = useUtilState((state: any) => state.setProgressBar);
 
-  const [progressBarForDetailModal, setProgressBarForDetailModal] =
-    useState(false);
+  const setImportModalIsOpen = useUtilState(
+    (state: any) => state.setImportModalIsOpen
+  );
+
+  const setProgressBarForDetailModal = useUtilState(
+    (state: any) => state.setProgressBarForDetailModal
+  );
+
+  const progressBarForDetailModal = useUtilState(
+    (state: any) => state.progressBarForDetailModal
+  );
 
   const {
     isOpen: modalIsOpen,
@@ -111,6 +121,7 @@ const SubscribersView = (props: { title: string }) => {
 
   return (
     <Main style={{ width: "80%" }} title={props.title}>
+      <ImportModalView handleChangeDataTable={handleChangeDataTable} />
       <DetailModalView
         isOpen={modalDetailIsOpen}
         onOpen={modalDetailOnOpen}
@@ -206,6 +217,7 @@ const SubscribersView = (props: { title: string }) => {
             <OutlineButtonCom
               text={"Import"}
               icon={<FaUndoAlt />}
+              onClick={() => setImportModalIsOpen(true)}
               customClickColor={ColorsEnum.LIGHTEST_PURPLE}
               customContentColor={ColorsEnum.RED}
             />

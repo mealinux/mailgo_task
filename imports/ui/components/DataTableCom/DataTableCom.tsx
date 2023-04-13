@@ -7,7 +7,7 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { TextEnum } from "../../constants/TextEnum";
 import { PaginationChangePage } from "react-data-table-component/dist/src/DataTable/types";
 import { DataTableEnum } from "../../constants/DataTableEnum";
-import { useModal } from "/imports/context/UtilContext";
+import { useUtilState } from "/imports/States/UtilState";
 
 const customStyles = {
   headCells: {
@@ -28,7 +28,9 @@ const DataTableCom = (props: {
   totalCount: number;
   columns: Array<Object>;
 }) => {
-  const { progressBar, setProgressBar } = useModal();
+  const setProgressBar = useUtilState((state: any) => state.setProgressBar);
+
+  const progressBar = useUtilState((state: any) => state.progressBar);
 
   useEffect(() => {
     setProgressBar(false);
