@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactElement, SetStateAction, useState } from "react";
+import React, { Dispatch, ReactElement, SetStateAction } from "react";
 import { Flex, Input, Text, Textarea } from "@chakra-ui/react";
 import { ColorsEnum } from "../../constants/ColorsEnum";
 

@@ -1,13 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Main from "../../Main";
-import {
-  Center,
-  Flex,
-  Input,
-  Select,
-  Spinner,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Center, Flex, Input, Spinner, useDisclosure } from "@chakra-ui/react";
 import DataTableCom from "../../components/DataTableCom/DataTableCom";
 
 import { FaPlus, FaTimes, FaFilter } from "react-icons/fa";

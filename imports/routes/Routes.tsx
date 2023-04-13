@@ -13,12 +13,11 @@ import DashboardView from "../ui/views/DashboardView";
 import CategoriesView from "../ui/views/Category/CategoriesView";
 import CampaignsView from "../ui/views/Campaign/CampaignsView";
 import SubscribersView from "../ui/views/Subscriber/SubscribersView";
-import { CampaignVerification } from "../ui/Verification/CampaignVerification";
+import { CampaignVerification } from "../ui/verification/CampaignVerification";
 import { NotFoundView } from "../ui/views/Util/NotFoundView";
-import { UnsubscribeVerification } from "../ui/Verification/UnsubscribeVerification";
+import { UnsubscribeVerification } from "../ui/verification/UnsubscribeVerification";
 import { UnsubscribeSuccessView } from "../ui/views/Util/UnsubscribeSuccessView";
 import MailView from "../ui/views/Mail/MailView";
-import { Meteor } from "meteor/meteor";
 
 export const RenderRoutes = () => (
   <BrowserRouter>
